@@ -400,6 +400,7 @@ MonoBehaviour:
   wallParent: {fileID: 1888483151}
   groundParent: {fileID: 2064418090}
   holeParent: {fileID: 1462113478}
+  stoolParent: {fileID: 1294601283}
   wallStraight: {fileID: 5684357618654421915, guid: 8c48bb4f106c5064c853c0a223dfc9a6,
     type: 3}
   wallCorner: {fileID: 7606193442902921733, guid: 0ab7ee6e4b8fa144a8c8d4ae3e413174,
@@ -407,8 +408,7 @@ MonoBehaviour:
   groundTile: {fileID: 7535289300193967752, guid: 544cb8cf143bc76418d044c64d043e59,
     type: 3}
   hole: {fileID: 3163401595788601467, guid: d9cdd4438cce8e04b8c8f0057c79d196, type: 3}
-  levelRadiusH: 4
-  levelRadiusW: 9
+  stool: {fileID: 2100054753040793674, guid: 28b2c4d665e79a54a8bbb7b0a6c401a4, type: 3}
 --- !u!4 &1097930013
 Transform:
   m_ObjectHideFlags: 0
@@ -423,8 +423,39 @@ Transform:
   - {fileID: 1888483151}
   - {fileID: 2064418090}
   - {fileID: 1462113478}
+  - {fileID: 1294601283}
   m_Father: {fileID: 0}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1294601282
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1294601283}
+  m_Layer: 0
+  m_Name: stools
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1294601283
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1294601282}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1097930013}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1462113477
 GameObject:

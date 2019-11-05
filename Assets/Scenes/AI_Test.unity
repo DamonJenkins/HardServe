@@ -240,7 +240,7 @@ MonoBehaviour:
   speed: 200
   target: {fileID: 1801027212}
   AstarObj: {fileID: 477369131}
-  enemyImg: {fileID: 0}
+  enemyImg: {fileID: 268779004}
 --- !u!212 &268779001
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -625,6 +625,7 @@ MonoBehaviour:
   wallParent: {fileID: 658705410}
   groundParent: {fileID: 1750884251}
   holeParent: {fileID: 594911953}
+  stoolParent: {fileID: 0}
   wallStraight: {fileID: 5684357618654421915, guid: 8c48bb4f106c5064c853c0a223dfc9a6,
     type: 3}
   wallCorner: {fileID: 7606193442902921733, guid: 0ab7ee6e4b8fa144a8c8d4ae3e413174,
@@ -632,8 +633,7 @@ MonoBehaviour:
   groundTile: {fileID: 7535289300193967752, guid: 544cb8cf143bc76418d044c64d043e59,
     type: 3}
   hole: {fileID: 3163401595788601467, guid: d9cdd4438cce8e04b8c8f0057c79d196, type: 3}
-  levelRadiusH: 4
-  levelRadiusW: 9
+  stool: {fileID: 2100054753040793674, guid: 28b2c4d665e79a54a8bbb7b0a6c401a4, type: 3}
 --- !u!4 &1636275511
 Transform:
   m_ObjectHideFlags: 0
