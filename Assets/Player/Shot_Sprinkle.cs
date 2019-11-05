@@ -31,6 +31,13 @@ public class Shot_Sprinkle : MonoBehaviour
     {
 		existenceTimer -= Time.deltaTime;
 		if (existenceTimer <= 0.0f) Destroy(gameObject);
+
+        Color oC = GetComponent<SpriteRenderer>().color;
+        GetComponent<SpriteRenderer>().color = new Color(oC.r, oC.g, oC.b, existenceTimer * 15.0f);
+
+        float scaleBy = Mathf.Min(existenceTimer * 10.0f, 1.0f);
+
+        transform.localScale = new Vector3(scaleBy, scaleBy, scaleBy);
     }
 
 	//Takes the player's shot damage, shot speed, and shot range, and the direction in which to move
@@ -49,13 +56,14 @@ public class Shot_Sprinkle : MonoBehaviour
 	}
 
 	private void OnCollisionEnter2D(Collision2D _collision){
-		//TODO: Uncomment
-		//Enemy hitEnemy = _collision.gameObject.GetComponent<Enemy>();
-		//if (hitEnemy != null) {
-		//	hitEnemy.Damage(damage);
-		//	Destroy(gameObject);
-		//}
-	}
+        //TODO: Uncomment
+        //Enemy hitEnemy = _collision.gameObject.GetComponent<Enemy>();
+        //if (hitEnemy != null) {
+        //	hitEnemy.Damage(damage);
+        //}
+
+        Destroy(gameObject);
+    }
 
 	public static float GetFireRate(float _plrFireRate) {
 		return _plrFireRate * fireRate;

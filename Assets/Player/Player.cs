@@ -94,12 +94,10 @@ public class Player : MonoBehaviour{
 		for (int i = 0; i < 15; i++){
 			Vector3 noisyDirection = Quaternion.Euler(0.0f, 0.0f, Random.Range(-22.5f, 22.5f)) * new Vector3(_direction.x, _direction.y, 0.0f);
 
-			float rangeNoise = Random.Range(0.85f, 1.0f);
-
 			GameObject.Instantiate(sprinkleShot, transform.position, Quaternion.identity).Initialise(
 				shotDamage,
-				shotSpeed * rangeNoise,
-				shotRange * rangeNoise,
+				shotSpeed * Random.Range(0.85f, 1.0f),
+				shotRange * Random.Range(0.85f, 1.0f),
 				new Vector2(noisyDirection.x, noisyDirection.y),
 				plrVelocity
 			);

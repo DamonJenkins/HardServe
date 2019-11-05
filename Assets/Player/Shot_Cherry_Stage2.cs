@@ -31,8 +31,6 @@ public class Shot_Cherry_Stage2 : MonoBehaviour
 		foreach (GameObject enemy in enemiesInRange) {
 			//enemy.GetComponent<Enemy>().Damage(explosionDamage);
 		}
-
-        Debug.Log("Boom");
 	}
 
     private void OnTriggerEnter2D(Collider2D _collision){

@@ -15,7 +15,7 @@ public class Shot_Chocolate : MonoBehaviour
 	float damage, speed, range;
 
 	//The number of shots for the player to fire per second
-	static float fireRate = 10.0f;
+	static float fireRate = 50.0f;
 
 	//TODO: Figure out if this should be multiplicative or additive
 	float slowAmount = 0.2f;
@@ -46,21 +46,22 @@ public class Shot_Chocolate : MonoBehaviour
 		existenceTimer = range / speed;
 
 		//Add significant velocity in the player's movement direction
-		Vector2 finalVelocity = (_direction * speed) + (_plrVelocity * 0.5f);
+		Vector2 finalVelocity = (_direction * speed) + (_plrVelocity * 0.3f);
 
 		GetComponent<Rigidbody2D>().velocity = finalVelocity;
 	}
 
 	private void OnCollisionEnter2D(Collision2D _collision)
 	{
-		//TODO: Uncomment
-		//Enemy hitEnemy = _collision.gameObject.GetComponent<Enemy>();
-		//if (hitEnemy != null) {
-		//	hitEnemy.Damage(damage);
-		//	hitEnemy.SlowBy(slowAmount);
-		//  Destroy(gameObject);
-		//}
-	}
+        //TODO: Uncomment
+        //Enemy hitEnemy = _collision.gameObject.GetComponent<Enemy>();
+        //if (hitEnemy != null) {
+        //	hitEnemy.Damage(damage);
+        //	hitEnemy.SlowBy(slowAmount);
+        //}
+
+        Destroy(gameObject);
+    }
 
 	public static float GetFireRate(float _plrFireRate) {
 		return _plrFireRate * fireRate;

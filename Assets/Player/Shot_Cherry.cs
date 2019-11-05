@@ -66,8 +66,9 @@ public class Shot_Cherry : MonoBehaviour
         //	hitEnemy.Damage(damage);
         //  GameObject.Instantiate(explosionObject, transform.position - hitEnemy.transform.position, Quaternion.identity, hitEnemy.transform);
         //	transform.parent = hitEnemy.gameObject;
-        //	Destroy(gameObject);
         //}
+
+        Destroy(gameObject);
     }
 
 	public static float GetFireRate(float _plrFireRate) {
