@@ -236,9 +236,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 676558d0ee5aad0408aad43fbb90404b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1801027212}
-  speed: 400
   nexWayPointDistance: 3
+  speed: 400
+  target: {fileID: 1801027212}
+  AstarObj: {fileID: 477369131}
+  enemyImg: {fileID: 268779004}
 --- !u!212 &268779001
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -300,7 +302,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 1.5
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -333,7 +335,7 @@ Transform:
   m_GameObject: {fileID: 268778999}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5.96, y: 3.64, z: -0.7578125}
-  m_LocalScale: {x: 0.37690952, y: 0.33652127, z: 1}
+  m_LocalScale: {x: 0.2367463, y: 0.25659746, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
@@ -397,7 +399,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAABoIexG7s37cwIAAB4FAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVMlym0AQ/RXVnCMVmyWTW4JlOQcvFSXlC5cRNGJKwww1iyXZpX9PzwAGK1zUeq/X1w0fhAndQmGk2ihWPsoSyPcZcTb5NhvJBzjRvRRb9g6DzysrTe2cqPf5TQ2TiIcuTMsGjGLFD7HnzjlA0ApWSdWsyz1kUhuNcEW5BqSUNC5aIPQxIyf8macu5IxWtHLWO1ppMLugWYAwoEbXYBFEKT6rOO5DwkXgnyjpI+erRRjcJHG4noeJT2JFwWnTQukmGnNFQ9WwqyVw1t7DzVVIzpnuGyXm3HohMtpqi2OiQ8koDu67Cxcuoga2r43LPA1/rioNptdF0fMdU6hgl5f8lJ2sDdWHrrM3yq1vwffUpXz8j513dKVk8zBUDQNXwdSsOPym54JqM1F9Ct9NGvfyHCk/0B2H1xrEk9woaUWJpFHWhVoN0d3493OwrIbiMOJdq1egbSe7G5a8iG+T8HYZL9fzYDVsDQe6eCFOGWfNzu866YAtl158fyagcE2/sHt/RLrPi6hr6a+GP3Q/vbaeuGdKG6T6kYXrdSetcq5k7QV0o1mTSSXAw/0ELQjKzfkF05jrbV5xk7JXzD1171VfvOeG1+UqxMOjfxBcUS/y+Lk5XcvjI+j62RrOBIxNO+IJdcqkEN2x6a+ki9paVdFiErW3rPx6ZmSXRjRcVsFyFYfLFKp5mlZhvEIzjm5ulklC/B0ygWNS/tL12auDSxNjcoE3N3xtZhtFW3/3paLHDXtv5HRnTFRyWygA8dylGAgNCqvgK1quS4YCbcEYJvy+yUdOuCwOUOafNXM/6vpkFM3HLDlp2Zs0DslJ5r8vObmQyz9QSwMEFAAACAgAAGgh7GucZRVrAAAAdwAAAAkAJABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQGrVipLLSrOzM9TslIw0TPSs9BRUEovSizIKAYKGII4pZkpIHa0UpKlUaKhWZqBmbmxoZllapqupWWaobE5kGlsZGpqZmKiFAtUX1JZkOqXmJsK0ROQWJKRlpmXkpmXrudelJniDjJaKbYWAFBLAQItABQAAAgIAABoIexG7s37cwIAAB4FAAALACQAAAAAAAAAAAAAAAAAAABncmFwaDAuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAABoIexrnGUVawAAAHcAAAAJACQAAAAAAAAAAAAAAMACAABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwUGAAAAAAIAAgC4AAAAdgMAAAAA
+    dataString: UEsDBBQAAAgIAABoIezpNJxqeAIAAB8FAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVE1zmzAQ/SsenWsPGAyht5Y4Tg/5mDidXLjIsBiNhcRIIraT8X/vSkAgLhev39vPtwufhAndQG6k2ihWPMgCyM8ZsTb5MRvJezjRvRRb9gGDzxsrTGWdqPN5oYZJxH0bpmUNRrH8l9hz6+wh2ApWSlWviz2kUhuNcEm5BqSUNDZaIPQ5Iyf8mSc25IzWMrbWB1qJN7ugmYMwoEZXb+EtE3ziIOhD/IXnnmXYR87jhe+twsBfz/3QJWlFzmndQGEnGnMth6p+V0vgrL2HnSuXnDPdN0rMuXFCpLTRLY6JDgWjOLjrzlusEKiA7StjM0/Dn8pSg+l1UfR8yxQq2OUlv2Una031oevsnfLWVoqjG9dVl/ThP37uO7pUsr4f6vqerWEqlh9e6Dmn2kx0n8K3Y+u+E+hI+YHuOLxVIB7lRslWFEga1drQVsPydvz7NVpaQX4Y8a7VK7BtJtsb1rwIbkL/Jgqi9dyLh73hQBcnxSnlrN45WcMO2HLp5HeHAgoX9Qe7d2ek+7yI2pb+anil++m99cQdU9og1Y8sbK872SrrStZOQDtaa1KpBDi4n6ABQbk5P2Mac73PK25S9oq5o/bN6ov33PDCXIU4ePT3vCvqWR6/NqcreXwAXT21hjMBY9OWeESdUilEd276O2mjtq0qaT6J2res+H5mZJcsqR+VXhQHfpRAOU+S0g9iNIPlahWFIXF3yASOSflz12evDi5NjMkF3tzwvZltFG3c5ReKHjfso5aT/pgo5TZXAOKpyzAopEFhEXxHi3XBUJ8tGMOEWzf5zAiX+QGK7CtR5iZdn4yi2ZglIw17l8YiGUndByYjF3L5B1BLAwQUAAAICAAAaCHsa5xlFWsAAAB3AAAACQAkAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAatWKkstKs7Mz1OyUjDRM9Kz0FFQSi9KLMgoBgoYgjilmSkgdrRSkqVRoqFZmoGZubGhmWVqmq6lZZqhsTmQaWxkampmYqIUC1RfUlmQ6peYmwrRE5BYkpGWmZeSmZeu516UmeIOMlopthYAUEsBAi0AFAAACAgAAGgh7Ok0nGp4AgAAHwUAAAsAJAAAAAAAAAAAAAAAAAAAAGdyYXBoMC5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAgAAGgh7GucZRVrAAAAdwAAAAkAJAAAAAAAAAAAAAAAxQIAAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLBQYAAAAAAgACALgAAAB7AwAAAAA=
     upgradeData: 
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
@@ -413,7 +415,7 @@ MonoBehaviour:
   logPathResults: 1
   maxNearestNodeDistance: 100
   scanOnStartup: 1
-  fullGetNearestSearch: 0
+  fullGetNearestSearch: 1
   prioritizeGraphs: 0
   prioritizeGraphsLimit: 1
   colorSettings:
@@ -429,7 +431,7 @@ MonoBehaviour:
   heuristic: 2
   heuristicScale: 1
   threadCount: 1
-  maxFrameTime: 1
+  maxFrameTime: 10
   batchGraphUpdates: 0
   graphUpdateBatchingInterval: 0.2
   euclideanEmbedding:

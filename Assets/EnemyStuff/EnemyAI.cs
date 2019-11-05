@@ -5,22 +5,30 @@ using Pathfinding;
 
 public class EnemyAI : MonoBehaviour
 {
-    public Transform target;
-    public AstarPath AstarObj;
-    public float speed;
+    
     public float nexWayPointDistance = 3f;
 
+
+    public float speed;
     //Path the AI following
     Path path;
+    //Setup Astar pathfinding
+    public Transform target;
+    public AstarPath AstarObj;
     int currentWaypoint = 0;
     bool reachedEnd = false;
 
     Seeker seeker;
     Rigidbody2D rb;
+
+    public Transform enemyImg;
+    float enemyScaleX;
+    float enemyScaleY;
     // Start is called before the first frame update
     void Start()
     {
-        
+        enemyScaleX = transform.localScale.x;
+        enemyScaleY = transform.localScale.y;
         
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
@@ -65,8 +73,16 @@ public class EnemyAI : MonoBehaviour
             currentWaypoint++;
         }
 
+        //Swap Img direction
+        if(rb.velocity.x>= 0.01f)
+        {
+            enemyImg.localScale = new Vector3(-enemyScaleX, enemyScaleY, 1f);
+        }
 
-
+        if (rb.velocity.x <= -0.01f)
+        {
+            enemyImg.localScale = new Vector3(enemyScaleX, enemyScaleY, 1f);
+        }
     }
 
     void PathComplete(Path p)
