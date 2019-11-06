@@ -156,6 +156,9 @@ public class EnemyAI : MonoBehaviour
         print("Oof one of the enemies just died");
     }
 
-
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //do something when collided with other stuff
+    }
 
 }
