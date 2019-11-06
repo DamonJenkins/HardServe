@@ -8,8 +8,16 @@ public class EnemyAI : MonoBehaviour
     
     public float nexWayPointDistance = 3f;
 
-
+    public float maxHitPoint;
+    public float hitPoint;
     public float speed;
+    public float dmg;
+    bool isSlowed = false;
+    public float slowTime = 0.0f;
+    public float slowTimeMax = 4.0f;
+    public float normalspeed;
+    public float slowedSpeed;
+    bool isAlive = true;
     //Path the AI following
     Path path;
     //Setup Astar pathfinding
@@ -20,24 +28,29 @@ public class EnemyAI : MonoBehaviour
 
     Seeker seeker;
     Rigidbody2D rb;
-
+    
     public Transform enemyImg;
     float enemyScaleX;
     float enemyScaleY;
     // Start is called before the first frame update
-    void Start()
+    public void SetupVarible()
     {
         enemyScaleX = transform.localScale.x;
         enemyScaleY = transform.localScale.y;
         
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
-        InvokeRepeating("UpdatePathGen",0f,0.5f);
-        
+        //InvokeRepeating("UpdatePathGen",0f,0.5f);
+
+    }
+
+    void seekFunc()
+    {
+        InvokeRepeating("UpdatePathGen", 0f, 0.5f);
     }
 
     //func to keep updating A* path
-    void UpdatePathGen()
+    public void UpdatePathGen()
     {
         if (seeker.IsDone())
         {
@@ -46,7 +59,7 @@ public class EnemyAI : MonoBehaviour
         }
     }
     // Update is called once per frame
-    void FixedUpdate()
+    public void SeekerFixedUpdate()
     {
         if(path == null)
         {
@@ -60,6 +73,25 @@ public class EnemyAI : MonoBehaviour
         else
         {
             reachedEnd = false;
+        }
+
+        if(isSlowed == false)
+        {
+            speed = normalspeed;
+        }
+        else
+        {
+            speed = slowedSpeed;
+        }
+
+        if(slowTime >0.0f)
+        {
+            slowTime -= Time.deltaTime;
+        }
+        else
+        {
+            isSlowed = false;
+            slowTime = slowTimeMax;
         }
 
         Vector2 dir =((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
@@ -93,4 +125,37 @@ public class EnemyAI : MonoBehaviour
             currentWaypoint = 0;
         }
     }
+
+   public void slowdown(float val)
+    {
+        isSlowed = true;
+        slowedSpeed = val;
+    }
+
+    public void receiveDmg(float Dmgval)
+    {
+        hitPoint -= Dmgval;
+        if(hitPoint <= 0)
+        {
+            hitPoint = 0;
+        }
+    }
+
+    public void checkDead()
+    {
+        if(hitPoint == 0)
+        {
+            isAlive = false;
+            deadFunc();
+        }
+    }
+
+    public void deadFunc()
+    {
+        //do something when dead
+        print("Oof one of the enemies just died");
+    }
+
+
+
 }
