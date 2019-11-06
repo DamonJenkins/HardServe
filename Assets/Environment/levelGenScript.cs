@@ -6,26 +6,47 @@ public class levelGenScript : MonoBehaviour
 {
 
     [SerializeField]
-    private Transform wallParent, groundParent, holeParent, stoolParent;
+    private Transform wallParent, groundParent, holeParent, stoolParent, doorParent;
 
     [SerializeField]
-    private GameObject wallStraight, wallCorner, groundTile, hole, stool;
+    private GameObject wallStraight, wallCorner, groundTile, hole, stool, door;
 
     [SerializeField]
-    private const int levelRadiusH = 4, levelRadiusW = 9;
+    private const int levelRadiusH = 4, levelRadiusW = 8;
 
-    private static Vector2 levelPos = new Vector2(0.0f, 0.0f);
+    private Vector2 levelPos = new Vector2(0.0f, 0.0f);
+    private List<GameObject> doors;
+    private List<Vector2> vistedRooms;
 
-    // Start is called before the first frame update
-    void Start()
+    public Vector2 moveLevelPos(Vector2 v)
     {
+        return levelPos += v;
+    }
+
+    public void LoadLevel(Vector2 lp)
+    {
+
+        if (!vistedRooms.Contains(lp))
+        {
+            //spawn enemies
+        }
+
+        print(levelPos);
+
+        foreach (Transform child in wallParent  ) Destroy(child.gameObject);
+        foreach (Transform child in groundParent) Destroy(child.gameObject);
+        foreach (Transform child in holeParent  ) Destroy(child.gameObject);
+        foreach (Transform child in stoolParent ) Destroy(child.gameObject);
+        doors = new List<GameObject>();
+        foreach (Transform child in doorParent) Destroy(child.gameObject);
+
         Random.State oldState = Random.state;
-        Random.InitState(Mathf.FloorToInt(hash21(levelPos) * 100000.0f));
+        Random.InitState(Mathf.FloorToInt(hash21(lp) * 1000000.0f));
 
         bool[,] tiles = new bool[levelRadiusW * 2, levelRadiusH * 2];
 
         //Corners
-        Instantiate(wallCorner, new Vector3(-levelRadiusW, - levelRadiusH), Quaternion.Euler(0.0f, 0.0f, 180.0f), wallParent);
+        Instantiate(wallCorner, new Vector3(-levelRadiusW, -levelRadiusH), Quaternion.Euler(0.0f, 0.0f, 180.0f), wallParent);
         Instantiate(wallCorner, new Vector3(1 + levelRadiusW, 1 - levelRadiusH), Quaternion.Euler(0.0f, 0.0f, -90.0f), wallParent);
         Instantiate(wallCorner, new Vector3(levelRadiusW, 2 + levelRadiusH), Quaternion.Euler(0.0f, 0.0f, 0.0f), wallParent);
         Instantiate(wallCorner, new Vector3(-1 - levelRadiusW, 1 + levelRadiusH), Quaternion.Euler(0.0f, 0.0f, 90.0f), wallParent);
@@ -33,7 +54,7 @@ public class levelGenScript : MonoBehaviour
         for (int x = 0; x < levelRadiusW * 2; x++)
         {
             //Bottom wall
-            Instantiate(wallStraight, new Vector3(1 + x - levelRadiusW,  - levelRadiusH), Quaternion.Euler(0.0f, 0.0f, 180.0f), wallParent);
+            Instantiate(wallStraight, new Vector3(1 + x - levelRadiusW, -levelRadiusH), Quaternion.Euler(0.0f, 0.0f, 180.0f), wallParent);
 
             for (int y = 0; y < levelRadiusH * 2; y++)
             {
@@ -48,12 +69,12 @@ public class levelGenScript : MonoBehaviour
                 );
 
                 //Stools
-                if( tiles[x,y] && Random.value > 0.85f && !(x == 0 || y == 0 || y == levelRadiusH * 2 - 1 || x == levelRadiusW * 2 - 1)) Instantiate(
-                     stool,
-                     new Vector3(x - levelRadiusW, levelRadiusH + 1 - y),
-                     Quaternion.identity,
-                     stoolParent
-                 );
+                if (tiles[x, y] && Random.value > 0.85f && !(x == 0 || y == 0 || y == levelRadiusH * 2 - 1 || x == levelRadiusW * 2 - 1)) Instantiate(
+                      stool,
+                      new Vector3(x - levelRadiusW, levelRadiusH + 1 - y),
+                      Quaternion.identity,
+                      stoolParent
+                  );
 
             }
             //Top Wall
@@ -66,22 +87,62 @@ public class levelGenScript : MonoBehaviour
             //Right Wall
             Instantiate(wallStraight, new Vector3(1 + levelRadiusW, levelRadiusH + 1 - y), Quaternion.Euler(0.0f, 0.0f, -90.0f), wallParent);
         }
+
+        foreach(Transform child in groundParent)
+        {
+            child.gameObject.GetComponent<SpriteRenderer>().sortingOrder = 1 - levelRadiusH - (int)child.position.y;
+        }
+
+        if (hash21(levelPos + new Vector2(0.5f, 0.0f)) > 0.2f)
+        {
+            doors.Add(Instantiate(door, new Vector3(1 + levelRadiusW, 1.5f), Quaternion.Euler(0.0f, 0.0f, -90.0f), doorParent));
+            doors[doors.Count - 1].GetComponent<doorControl>().setDirection(new Vector2(1.0f, 0.0f));
+        }
+        if (hash21(levelPos + new Vector2(-0.5f, 0.0f)) > 0.2f)
+        {
+            doors.Add(Instantiate(door, new Vector3(-1 - levelRadiusW, 0.5f), Quaternion.Euler(0.0f, 0.0f, 90.0f), doorParent));
+            doors[doors.Count - 1].GetComponent<doorControl>().setDirection(new Vector2(-1.0f, 0.0f));
+        }
+        if (hash21(levelPos + new Vector2(0.0f, 0.5f)) > 0.2f)
+        {
+            doors.Add(Instantiate(door, new Vector3(-0.5f, 2 + levelRadiusH), Quaternion.Euler(0.0f, 0.0f, 0.0f), doorParent));
+            doors[doors.Count - 1].GetComponent<doorControl>().setDirection(new Vector2(0.0f, 1.0f));
+        }
+        if (hash21(levelPos + new Vector2(0.0f, -0.5f)) > 0.2f)
+        {
+            doors.Add(Instantiate(door, new Vector3(0.5f, -levelRadiusH), Quaternion.Euler(0.0f, 0.0f, 180.0f), doorParent));
+            doors[doors.Count - 1].GetComponent<doorControl>().setDirection(new Vector2(0.0f, -1.0f));
+        }
+
         Random.state = oldState;
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        vistedRooms = new List<Vector2>();
+        levelPos = new Vector2(Random.value, Random.value);
+        LoadLevel(levelPos);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+    }
+
+    float fract(float f)
+    {
+        return f - Mathf.Floor(f);
+    }
+
+    Vector2 fract(Vector2 v)
+    {
+        return new Vector2(fract(v.x), fract(v.y));
     }
 
     float hash21(Vector2 p)
     {
-        p *= new Vector2(234.34f, 435.345f);
-        p = new Vector2(p.x - Mathf.Floor(p.y), p.x - Mathf.Floor(p.y));
-        p += new Vector2(Vector2.Dot(p, p + new Vector2(34.23f, 34.23f)), Vector2.Dot(p, p + new Vector2(34.23f, 34.23f)));
-        float retVal = p.x * p.y;
-        return retVal - Mathf.Floor(retVal);
+        return fract(Mathf.Sin(Vector2.Dot(p, new Vector2(12.9898f, 78.233f) * 43758.5453123f)));
     }
 
 }
