@@ -61,12 +61,13 @@ public class Shot_Cherry : MonoBehaviour
 
 	private void OnCollisionEnter2D(Collision2D _collision){
         //TODO: Uncomment
-        //Enemy hitEnemy = _collision.gameObject.GetComponent<Enemy>();
-        //if (hitEnemy != null) {
-        //	hitEnemy.Damage(damage);
-        //  GameObject.Instantiate(explosionObject, transform.position - hitEnemy.transform.position, Quaternion.identity, hitEnemy.transform);
-        //	transform.parent = hitEnemy.gameObject;
-        //}
+        EnemyAI hitEnemy = _collision.gameObject.GetComponent<EnemyAI>();
+        if (hitEnemy != null) {
+        	//hitEnemy.Damage(damage);
+            GameObject.Instantiate(explosionObject, transform.position, Quaternion.identity, hitEnemy.transform);
+        }else{
+            GameObject.Instantiate(explosionObject, transform.position, Quaternion.identity);
+        }
 
         Destroy(gameObject);
     }

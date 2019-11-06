@@ -42,6 +42,15 @@ public class Player : MonoBehaviour{
 
         GetComponent<Rigidbody2D>().velocity = tempVelocity.SqrMagnitude() > 1.0f ? tempVelocity.normalized * maxSpeed : tempVelocity * maxSpeed;
 
+        Vector2 plrVel = GetComponent<Rigidbody2D>().velocity;
+
+        Animator myAnimator = GetComponent<Animator>();
+
+        myAnimator.SetBool("GoingLeft", plrVel.x < 0.0f);
+        myAnimator.SetBool("GoingRight", plrVel.x > 0.0f);
+        myAnimator.SetBool("GoingUp", plrVel.y > 0.0f);
+        myAnimator.SetBool("GoingDown", plrVel.y < 0.0f);
+
         if (CanShoot()) {
 
             if (Input.GetButton("FireU")){
