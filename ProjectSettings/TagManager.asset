@@ -13,11 +13,11 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Hole
+  - Wall
+  - Terrain
+  - Bullets
+  - Enemies
   - 
   - 
   - 

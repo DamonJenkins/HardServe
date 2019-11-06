@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8390733997773161927}
   - component: {fileID: 6065140414243681165}
   - component: {fileID: 348542316598150659}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: stool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,7 +68,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: -2
   m_Sprite: {fileID: 21300000, guid: 9d0bec911712dc343bd4b48bd7e661f3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
