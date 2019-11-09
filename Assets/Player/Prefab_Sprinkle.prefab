@@ -83,6 +83,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dfb3e894b6452f43ba7742e83c38b62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprinkleImages:
+  - {fileID: 21300000, guid: 4c431a6080776004291480d7cb3ffc22, type: 3}
+  - {fileID: 21300000, guid: 9a7f7733160f2c249826c61f40d7876a, type: 3}
+  - {fileID: 21300000, guid: afbeec11bf2b31646b42520e94a8d1ac, type: 3}
+  - {fileID: 21300000, guid: a2e3b020127a6c247a172917ddabe1c6, type: 3}
+  - {fileID: 21300000, guid: c02f7f50024550f4799978696c0e596d, type: 3}
+  - {fileID: 21300000, guid: 2d3c75a17ae1bb843b0a1acd10b4a792, type: 3}
 --- !u!212 &-9151287880042102607
 SpriteRenderer:
   m_ObjectHideFlags: 0
