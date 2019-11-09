@@ -28,7 +28,6 @@ public class Player : MonoBehaviour{
 	float[] fireRatesInScalars = { 0.5f, 16.6f, 0.11f };
 
 	void Start(){
-
 		for (int i = 0; i < 3; i++) {
 			weaponAmmo[i] = maxAmmo[i];
 		}
