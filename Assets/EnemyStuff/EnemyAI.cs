@@ -6,6 +6,7 @@ using Pathfinding;
 public class EnemyAI : MonoBehaviour
 {
     
+    
     public float nexWayPointDistance = 3f;
 
     public float maxHitPoint;
@@ -33,10 +34,7 @@ public class EnemyAI : MonoBehaviour
     float enemyScaleX;
     float enemyScaleY;
 
-    
-
-    GridNode randomNode;
-    Vector2 WanderPoint;
+   
     // Start is called before the first frame update
     public void SetupVarible()
     {
@@ -49,13 +47,15 @@ public class EnemyAI : MonoBehaviour
 
     }
 
-    void seekFunc()
+    public void seekFunc()
     {
         InvokeRepeating("UpdatePathGen", 0f, 0.5f);
     }
 
-    void WanderFunc()
+    public void WanderFunc()
     {
+        InvokeRepeating("UpdateRandGen", 0f, 4.5f);
+        
         
     }
 
@@ -74,9 +74,10 @@ public class EnemyAI : MonoBehaviour
         if (seeker.IsDone())
         {
             AstarObj.Scan();
-            seeker.StartPath(rb.position, WanderPoint, PathComplete);
+            seeker.StartPath(rb.position, BFSWanderPoint(), PathComplete);
         }
     }
+
     // Update is called once per frame
     public void SeekerFixedUpdate()
     {
@@ -234,21 +235,15 @@ public class EnemyAI : MonoBehaviour
         print("Oof one of the enemies just died");
     }
 
-    public void MakeRandNode()
+    public Vector3 BFSWanderPoint()
     {
-        var grid = AstarPath.active.data.gridGraph;
-        randomNode = grid.nodes[Random.Range(0, grid.nodes.Length)];
-        
-        while(randomNode.Walkable == false)
-        {
-            randomNode = grid.nodes[Random.Range(0, grid.nodes.Length)];
-        }
-        Vector2 tempVec;
-        tempVec.x = randomNode.position.x;
-        tempVec.y = randomNode.position.y;
-
-        WanderPoint = tempVec;
+        var startNode = AstarPath.active.GetNearest(transform.position, NNConstraint.Default).node;
+        var nodes = PathUtilities.BFS(startNode, 100);
+        var singleRandomPoint = PathUtilities.GetPointsOnNodes(nodes, 1)[0];
+        //var multipleRandomPoints = PathUtilities.GetPointsOnNodes(nodes, 100);
+        return singleRandomPoint;
     }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
