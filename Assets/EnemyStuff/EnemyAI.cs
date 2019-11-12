@@ -59,6 +59,13 @@ public class EnemyAI : MonoBehaviour
         
     }
 
+    public void DisableWanderFunc()
+    {
+        CancelInvoke("UpdateRandGen");
+
+
+    }
+
     //func to keep updating A* path
     public void UpdatePathGen()
     {
@@ -237,6 +244,7 @@ public class EnemyAI : MonoBehaviour
 
     public Vector3 BFSWanderPoint()
     {
+        // Get a random point for wander
         var startNode = AstarPath.active.GetNearest(transform.position, NNConstraint.Default).node;
         var nodes = PathUtilities.BFS(startNode, 100);
         var singleRandomPoint = PathUtilities.GetPointsOnNodes(nodes, 1)[0];
@@ -244,6 +252,29 @@ public class EnemyAI : MonoBehaviour
         return singleRandomPoint;
     }
 
+    public float getDistToPlayer()
+    {
+        return Vector3.Distance(target.position, rb.position); 
+    }
+
+   public void ChargeToPlayer()
+    {
+        rb.velocity.Scale(Vector2.zero);
+        Vector2 playerLoc;
+        playerLoc.x = target.position.x;
+        playerLoc.y = target.position.y;
+        Vector2 dir = (playerLoc - rb.position).normalized;
+        Vector2 force ;
+        if (isSlowed)
+        {
+            force = dir * slowedSpeed * Time.deltaTime * 50.0f;
+        }
+        else
+        {
+            force = dir * speed * Time.deltaTime * 50.0f;
+        }
+        
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
