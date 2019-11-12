@@ -4,6 +4,8 @@ using UnityEngine;
 using Pathfinding;
 public class WanderAI : EnemyAI
 {
+    public float chargingCooldown = 3.5f;
+    public float currentCooldown = 3.5f;
     public bool isCharging = false;
     // Start is called before the first frame update
     void Start()
@@ -16,11 +18,34 @@ public class WanderAI : EnemyAI
     private void Update()
     {
         checkDead();
+        if(isCharging)
+        {
+            currentCooldown -= Time.deltaTime;
+            if(currentCooldown <= 0)
+            {
+                isCharging = false;
+                currentCooldown = chargingCooldown;
+                WanderFunc();
+            }
+        }
+        else if(checkXYdifference())
+        {
+            ChargeToPlayer();
+            isCharging = true;
+        }
+        
+        //print("Distance to player: " + getDistToPlayer());
+
     }
     private void FixedUpdate()
     {
-        WanderFixedUpdate();
+        if (isCharging == false)
+        {
+            WanderFixedUpdate();
+        }
     }
+
+    
 }
 
 

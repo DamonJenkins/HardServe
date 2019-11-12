@@ -257,9 +257,23 @@ public class EnemyAI : MonoBehaviour
         return Vector3.Distance(target.position, rb.position); 
     }
 
+    public bool checkXYdifference()
+    {
+        if(Mathf.Abs(target.position.x - rb.position.x) <= 0.3 || Mathf.Abs(target.position.y - rb.position.y) <= 0.3)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
    public void ChargeToPlayer()
     {
+        DisableWanderFunc();
         rb.velocity.Scale(Vector2.zero);
+        
         Vector2 playerLoc;
         playerLoc.x = target.position.x;
         playerLoc.y = target.position.y;
@@ -267,13 +281,16 @@ public class EnemyAI : MonoBehaviour
         Vector2 force ;
         if (isSlowed)
         {
-            force = dir * slowedSpeed * Time.deltaTime * 50.0f;
+            force = dir * slowedSpeed * Time.deltaTime * 180.0f;
         }
         else
         {
-            force = dir * speed * Time.deltaTime * 50.0f;
+            force = dir * speed * Time.deltaTime * 180.0f;
         }
-        
+
+        rb.AddForce(force);
+        print("charging to player");
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
