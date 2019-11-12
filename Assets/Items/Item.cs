@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
+	public delegate void ItemPickup();
+	public static event ItemPickup ItemPickedUp;
+
 	static ItemData[] allItems;
 
 	ItemData thisInfo;
@@ -17,7 +20,7 @@ public class Item : MonoBehaviour
 
 		thisInfo = allItems[Random.Range(0, allItems.Length)];
 		GetComponent<SpriteRenderer>().sprite = thisInfo.itemSprite;
-    }
+	}
 
     // Update is called once per frame
     void Update()
@@ -30,6 +33,7 @@ public class Item : MonoBehaviour
 
 		_collision.gameObject.GetComponent<Player>().AddStats(
 			thisInfo.moveSpeedIncrease,
+			thisInfo.maxHealthIncrease,
 			thisInfo.maxAmmoIncrease,
 			thisInfo.rechargeRateIncrease,
 			thisInfo.fireRateIncrease,
@@ -37,6 +41,10 @@ public class Item : MonoBehaviour
 			thisInfo.shotSpeedIncrease,
 			thisInfo.rangeIncrease
 		);
+
+		//AudioSource.PlayClipAtPoint(thisInfo.pickupSound, transform.position);
+
+		FindObjectOfType<HUDManager>().PickedUpItem(thisInfo.itemName, thisInfo.itemDescription);
 
 		Destroy(gameObject);
 	}

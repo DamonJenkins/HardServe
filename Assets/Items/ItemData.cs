@@ -13,15 +13,18 @@ public class ItemData : ScriptableObject{
 	public string itemName;
 	[SerializeField]
 	public string itemDescription;
-
+	[SerializeField]
+	public AudioClip pickupSound;
 
 	[Header("Player Stats")]
 	[SerializeField]
 	public float moveSpeedIncrease;
 	[SerializeField]
-	public float maxAmmoIncrease;
+	public int maxHealthIncrease;
 
 	[Header("Weapon Stats")]
+	[SerializeField]
+	public float maxAmmoIncrease;
 	[SerializeField]
 	public float rechargeRateIncrease;
 	[SerializeField]

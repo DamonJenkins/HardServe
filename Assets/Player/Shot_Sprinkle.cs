@@ -7,7 +7,7 @@ public class Shot_Sprinkle : MonoBehaviour
 	[SerializeField]
 	Sprite[] sprinkleImages;
 
-	//The amount of each of the players stats that this bullet will take
+	//The amount each stat will increase when AddStats is increased
 	const float dmgScalar = 0.07f, 
 				spdScalar = 3.0f, 
 				rngScalar = 2.1f;

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Shot_Cherry_Stage2 : MonoBehaviour
 {
+	Animator myAnimator;
+
 	public bool exploded = false;
 
     List<GameObject> enemiesInRange = new List<GameObject>();
@@ -17,16 +19,22 @@ public class Shot_Cherry_Stage2 : MonoBehaviour
     void Start()
     {
         existenceTimer = fuseTime;
-    }
+
+		myAnimator = GetComponent<Animator>();
+
+	}
 
     // Update is called once per frame
     void Update()
     {
+		myAnimator.speed = (((fuseTime - existenceTimer) / fuseTime) * 3.0f) + 1.0f;
+
 		if (exploded) Destroy(gameObject);
 
         existenceTimer -= Time.deltaTime;
 		if (existenceTimer <= 0.0f && !exploded) {
 			//Explode
+			myAnimator.speed = 1.0f;
 			GetComponent<Animator>().SetTrigger("Explode");
 			foreach (GameObject enemy in enemiesInRange)
 			{

@@ -10,15 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0023ae51328eaa74ea6ac3275403079b, type: 3}
-  m_Name: Spoon
+  m_Name: Banana
   m_EditorClassIdentifier: 
-  itemSprite: {fileID: 0}
-  itemName: Spoon
-  itemDescription: Spoon shiny
-  moveSpeedIncrease: 100
-  maxAmmoIncrease: 5
-  rechargeRateIncrease: 20
-  fireRateIncrease: 500
+  itemSprite: {fileID: 21300000, guid: d19ce89ae7279424a96eca31332d030c, type: 3}
+  itemName: Banana
+  itemDescription: 'Caution: Slippery'
+  pickupSound: {fileID: 0}
+  moveSpeedIncrease: 0
+  currentHealthIncrease: 0
+  maxHealthIncrease: 0
+  maxAmmoIncrease: 0
+  rechargeRateIncrease: 0
+  fireRateIncrease: 0
   damageIncrease: 0
-  shotSpeedIncrease: 0
+  shotSpeedIncrease: 1
   rangeIncrease: 0

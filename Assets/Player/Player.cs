@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour{
+	//Event broadcasting
+	public delegate void WeaponChange();
+	public static event WeaponChange WeaponChanged;
+
 	//BulletPrefabs
 	[SerializeField]
 	Shot_Sprinkle sprinkleShot;
@@ -11,8 +15,11 @@ public class Player : MonoBehaviour{
 	[SerializeField]
 	Shot_Cherry cherryShot;
 
-	int currentWeapon = 0;
+	public static int currentWeapon = 0;
+	float maxMaxSpeed = 21.0f;
     float maxSpeed = 7.0f;
+	int maxHealth = 3;
+	int currentHealth = 3;
 
 	float[] shotTimers = { 0.0f, 0.0f, 0.0f };
 
@@ -35,10 +42,6 @@ public class Player : MonoBehaviour{
 
     // Update is called once per frame
     void Update(){
-		if (Input.GetKeyDown(KeyCode.KeypadPlus)) {
-			AddStats(0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f);
-		}
-
 		for (int i = 0; i < 3; i++) {
 			if (shotTimers[i] > 0.0f){
 				shotTimers[i] -= Time.deltaTime;
@@ -104,18 +107,20 @@ public class Player : MonoBehaviour{
         if (Input.GetButtonDown("SwitchLeft")){
             if (currentWeapon == 0) currentWeapon = 2;
             else currentWeapon -= 1;
+			WeaponChanged();
         }
         else if (Input.GetButtonDown("SwitchRight")){
             if (currentWeapon == 2) currentWeapon = 0;
             else currentWeapon += 1;
-        }
+			WeaponChanged();
+		}
     }
 
-    private bool CanShoot() {
+    bool CanShoot() {
         return (shotTimers[currentWeapon] <= 0.0f && weaponAmmo[currentWeapon] >= 1.0f);
     }
 
-	public void ShootSprinkle(Vector2 _direction){
+	void ShootSprinkle(Vector2 _direction){
 		Vector2 plrVelocity = GetComponent<Rigidbody2D>().velocity;
 		
 		for (int i = 0; i < 15; i++){
@@ -130,7 +135,7 @@ public class Player : MonoBehaviour{
 		shotTimers[currentWeapon] = 1.0f / fireRates[currentWeapon];
 	}
 
-	public void ShootChocolate(Vector2 _direction){
+	void ShootChocolate(Vector2 _direction){
 		Vector2 plrVelocity = GetComponent<Rigidbody2D>().velocity;
 
 		GameObject.Instantiate(chocolateShot, transform.position, Quaternion.identity).Initialise(
@@ -141,7 +146,7 @@ public class Player : MonoBehaviour{
 		shotTimers[currentWeapon] = 1.0f / fireRates[currentWeapon];
 	}
 
-	public void ShootCherry(Vector2 _direction){
+	void ShootCherry(Vector2 _direction){
 		Vector2 plrVelocity = GetComponent<Rigidbody2D>().velocity;
 
 		GameObject.Instantiate(cherryShot, transform.position, Quaternion.identity).Initialise(
@@ -152,8 +157,9 @@ public class Player : MonoBehaviour{
 		shotTimers[currentWeapon] = 1.0f / fireRates[currentWeapon];
 	}
 
-	public void AddStats(float _moveSpeed, float _maxAmmo, float _rechargeRate, float _fireRate, float _damage, float _shotSpeed, float _range) {
-		maxSpeed += _moveSpeed * 2.3f;
+	public void AddStats(float _moveSpeed, int _maxHealth, float _maxAmmo, float _rechargeRate, float _fireRate, float _damage, float _shotSpeed, float _range) {
+		maxSpeed = Mathf.Min(maxSpeed + (_moveSpeed * 2.3f), maxMaxSpeed);
+		maxHealth += _maxHealth;
 		maxAmmo[currentWeapon] += _maxAmmo * ammoIncScalars[currentWeapon];
 		rechargeRates[currentWeapon] += _rechargeRate * rechargeIncScalars[currentWeapon];
 		fireRates[currentWeapon] += _fireRate * fireRatesInScalars[currentWeapon];
@@ -172,5 +178,25 @@ public class Player : MonoBehaviour{
 				break;
 			}
 		}
+	}
+
+	public void Heal(int _amount) {
+		currentHealth = Mathf.Min(currentHealth + _amount, maxHealth);
+	}
+	 
+	public void Damage(int _amount) {
+		//TODO: Play animation
+		currentHealth -= _amount;
+		if (currentHealth <= 0) { 
+			//TODO: Kill
+		}
+	}
+
+	public int Health {
+		get { return currentHealth; }
+	}
+
+	public float AmmoScale {
+		get { return weaponAmmo[currentWeapon] / maxAmmo[currentWeapon]; }
 	}
 }
