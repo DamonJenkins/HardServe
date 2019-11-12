@@ -278,7 +278,7 @@ PrefabInstance:
     - target: {fileID: 4559873363291474654, guid: 7bd3b8e62a48df8438765add593ec3b8,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 3.64
+      value: 3.822
       objectReference: {fileID: 0}
     - target: {fileID: 4559873363291474654, guid: 7bd3b8e62a48df8438765add593ec3b8,
         type: 3}
@@ -288,7 +288,7 @@ PrefabInstance:
     - target: {fileID: 4559873363291474654, guid: 7bd3b8e62a48df8438765add593ec3b8,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 3
+      value: 4.419
       objectReference: {fileID: 0}
     - target: {fileID: 4559873363291474654, guid: 7bd3b8e62a48df8438765add593ec3b8,
         type: 3}
@@ -319,6 +319,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4559873363291474654, guid: 7bd3b8e62a48df8438765add593ec3b8,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.40823933
+      objectReference: {fileID: 0}
+    - target: {fileID: 4559873363291474654, guid: 7bd3b8e62a48df8438765add593ec3b8,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.44583806
       objectReference: {fileID: 0}
     - target: {fileID: 2130842281113729196, guid: 7bd3b8e62a48df8438765add593ec3b8,
         type: 3}
@@ -510,6 +520,8 @@ MonoBehaviour:
   wallParent: {fileID: 658705410}
   groundParent: {fileID: 1750884251}
   holeParent: {fileID: 594911953}
+  stoolParent: {fileID: 0}
+  doorParent: {fileID: 0}
   wallStraight: {fileID: 5684357618654421915, guid: 8c48bb4f106c5064c853c0a223dfc9a6,
     type: 3}
   wallCorner: {fileID: 7606193442902921733, guid: 0ab7ee6e4b8fa144a8c8d4ae3e413174,
@@ -517,8 +529,8 @@ MonoBehaviour:
   groundTile: {fileID: 7535289300193967752, guid: 544cb8cf143bc76418d044c64d043e59,
     type: 3}
   hole: {fileID: 3163401595788601467, guid: d9cdd4438cce8e04b8c8f0057c79d196, type: 3}
-  levelRadiusH: 4
-  levelRadiusW: 9
+  stool: {fileID: 2100054753040793674, guid: 28b2c4d665e79a54a8bbb7b0a6c401a4, type: 3}
+  door: {fileID: 1707556161674732397, guid: 6a07ff09798976f46bc55dab50e9f7ef, type: 3}
 --- !u!4 &1636275511
 Transform:
   m_ObjectHideFlags: 0
