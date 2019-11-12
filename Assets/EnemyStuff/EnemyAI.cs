@@ -240,6 +240,7 @@ public class EnemyAI : MonoBehaviour
     {
         //do something when dead
         print("Oof one of the enemies just died");
+        Destroy(gameObject);
     }
 
     public Vector3 BFSWanderPoint()
