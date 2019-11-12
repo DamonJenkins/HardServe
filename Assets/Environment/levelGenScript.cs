@@ -11,12 +11,13 @@ public class levelGenScript : MonoBehaviour
     [SerializeField]
     private GameObject wallStraight, wallCorner, groundTile, hole, stool, door;
 
-    [SerializeField]
     private const int levelRadiusH = 4, levelRadiusW = 8;
 
     private Vector2 levelPos = new Vector2(0.0f, 0.0f);
     private List<GameObject> doors;
     private List<Vector2> vistedRooms;
+
+    private float timeSinceLevelLoad = 0.0f;
 
     public Vector2 moveLevelPos(Vector2 v)
     {
@@ -90,7 +91,7 @@ public class levelGenScript : MonoBehaviour
 
         foreach(Transform child in groundParent)
         {
-            child.gameObject.GetComponent<SpriteRenderer>().sortingOrder = 1 - levelRadiusH - (int)child.position.y;
+            child.gameObject.GetComponent<SpriteRenderer>().sortingOrder = - 5 - levelRadiusH - (int)child.position.y;
         }
 
         if (hash21(levelPos + new Vector2(0.5f, 0.0f)) > 0.2f)
@@ -115,6 +116,7 @@ public class levelGenScript : MonoBehaviour
         }
 
         Random.state = oldState;
+        timeSinceLevelLoad = 0.0f;
     }
 
     // Start is called before the first frame update
@@ -128,6 +130,7 @@ public class levelGenScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        timeSinceLevelLoad += Time.deltaTime;
     }
 
     float fract(float f)
@@ -143,6 +146,11 @@ public class levelGenScript : MonoBehaviour
     float hash21(Vector2 p)
     {
         return fract(Mathf.Sin(Vector2.Dot(p, new Vector2(12.9898f, 78.233f) * 43758.5453123f)));
+    }
+
+    public bool finished()
+    {
+        return timeSinceLevelLoad > 10.0f;
     }
 
 }
