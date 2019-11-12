@@ -11,7 +11,7 @@ public class levelGenScript : MonoBehaviour
     [SerializeField]
     private GameObject wallStraight, wallCorner, groundTile, hole, stool, door;
 
-    private const int levelRadiusH = 4, levelRadiusW = 8;
+    private const int levelRadiusH = 3, levelRadiusW = 7;
 
     private Vector2 levelPos = new Vector2(0.0f, 0.0f);
     private List<GameObject> doors;
@@ -45,6 +45,10 @@ public class levelGenScript : MonoBehaviour
         Random.InitState(Mathf.FloorToInt(hash21(lp) * 1000000.0f));
 
         bool[,] tiles = new bool[levelRadiusW * 2, levelRadiusH * 2];
+        bool[,] stools = new bool[levelRadiusW * 2, levelRadiusH * 2];
+
+        int holeRule = Random.Range(0, 5);
+        int stoolRule = Random.Range(0, 5);
 
         //Corners
         Instantiate(wallCorner, new Vector3(-levelRadiusW, -levelRadiusH), Quaternion.Euler(0.0f, 0.0f, 180.0f), wallParent);
@@ -60,7 +64,8 @@ public class levelGenScript : MonoBehaviour
             for (int y = 0; y < levelRadiusH * 2; y++)
             {
                 //Setting tile existence
-                tiles[x, y] = Random.Range(0.0f, 1.0f) < 0.8f || x == 0 || y == 0 || y == levelRadiusH * 2 - 1 || x == levelRadiusW * 2 - 1;
+                tiles[x, y] = !IsHole(x,y, holeRule);
+                stools[x, y] = IsStool(x, y, stoolRule);
 
                 Instantiate(
                     tiles[x, y] ? groundTile : hole,
@@ -70,7 +75,7 @@ public class levelGenScript : MonoBehaviour
                 );
 
                 //Stools
-                if (tiles[x, y] && Random.value > 0.85f && !(x == 0 || y == 0 || y == levelRadiusH * 2 - 1 || x == levelRadiusW * 2 - 1)) Instantiate(
+                if (tiles[x, y] && stools[x,y]) Instantiate(
                       stool,
                       new Vector3(x - levelRadiusW, levelRadiusH + 1 - y),
                       Quaternion.identity,
@@ -127,6 +132,42 @@ public class levelGenScript : MonoBehaviour
         LoadLevel(levelPos);
     }
 
+    bool IsHole(int x, int y, int rule)
+    {
+        switch (rule)
+        {
+            case 0:
+                return (x == 1 || x == 2 * levelRadiusW - 2) && (y != 0 && y != levelRadiusH * 2 - 1);
+            case 1:
+                return (y == 1 || y == 2 * levelRadiusH - 2) && (x != 0 && x != levelRadiusW * 2 - 1 && x != 1 && x != levelRadiusW * 2 - 2);
+            case 2:
+                return (x == levelRadiusW || x == levelRadiusW - 1) && (y == levelRadiusH || y == levelRadiusH - 1);
+            case 3:
+                return (x == levelRadiusW - 2 || x == levelRadiusW + 1) && (y != 0 && y != levelRadiusH * 2 - 1) || (x == levelRadiusW - 3 && y == levelRadiusH + 1) || (x == levelRadiusW + 2 && y == levelRadiusH + 1);
+            case 4:
+                return false;
+        }
+        return false;
+    }
+
+    bool IsStool(int x, int y, int rule)
+    {
+        switch (rule)
+        {
+            case 0:
+                return (x + y * 13) % 18 == 0;
+            case 1:
+                return (x == 0 && y == 0) || (x == levelRadiusW * 2 - 1 && y == levelRadiusH * 2 - 1) || (x == levelRadiusW || x == levelRadiusW - 1) && (y == levelRadiusH || y == levelRadiusH - 1); ;
+            case 2:
+                return false;
+            case 3:
+                return false;
+            case 4:
+                return false;
+        }
+        return false;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -150,7 +191,7 @@ public class levelGenScript : MonoBehaviour
 
     public bool finished()
     {
-        return timeSinceLevelLoad > 10.0f;
+        return timeSinceLevelLoad > 2.0f;
     }
 
 }

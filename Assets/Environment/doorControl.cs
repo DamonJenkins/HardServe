@@ -24,7 +24,7 @@ public class doorControl : MonoBehaviour
         if (collision.tag == "Player" && levelGenScript.finished())
         {
             levelGenScript.LoadLevel(levelGenScript.moveLevelPos(direction));
-            collision.gameObject.transform.position -= new Vector3(direction.x * 15, direction.y * 7, 0.0f);
+            collision.gameObject.transform.position -= new Vector3(direction.x * 13, direction.y * 5, 0.0f);
         }
     }
 
