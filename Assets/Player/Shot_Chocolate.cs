@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class Shot_Chocolate : MonoBehaviour
 {
+
 	//The amount of each of the players stats that this bullet will take
-	const float dmgScalar = 0.1f,
-				spdScalar = 1.0f,
-				rngScalar = 1.0f;
+	const float dmgScalar = 0.03f,
+				spdScalar = 3.0f,
+				rngScalar = 3.0f;
 
 	//damage = HP dealt to enemy on hit
 	//speed  = How many units the bullet travels per second
 	//range  = How many units the bullet travels before being destroyed
-	float damage, speed, range;
+	static float damage = 0.1f, speed = 9.0f, range = 9.0f;
 
 	//The number of shots for the player to fire per second
 	static float fireRate = 50.0f;
@@ -37,12 +38,8 @@ public class Shot_Chocolate : MonoBehaviour
 	}
 
 	//Takes the player's shot damage, shot speed, and shot range, and the direction in which to move
-	public void Initialise(float _plrDmg, float _plrSpd, float _plrRng, Vector2 _direction, Vector2 _plrVelocity)
+	public void Initialise(Vector2 _direction, Vector2 _plrVelocity)
 	{
-		damage = _plrDmg * dmgScalar;
-		speed  = _plrSpd * spdScalar;
-		range  = _plrRng * rngScalar;
-
 		existenceTimer = range / speed;
 
 		//Add significant velocity in the player's movement direction
@@ -65,5 +62,11 @@ public class Shot_Chocolate : MonoBehaviour
 
 	public static float GetFireRate(float _plrFireRate) {
 		return _plrFireRate * fireRate;
+	}
+
+	public static void AddStats(float _damage, float _speed, float _range) {
+		damage += _damage * dmgScalar;
+		speed += _speed * spdScalar;
+		range += _range * rngScalar;
 	}
 }

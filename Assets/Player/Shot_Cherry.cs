@@ -9,16 +9,16 @@ public class Shot_Cherry : MonoBehaviour
     Shot_Cherry_Stage2 explosionObject;
 
 	//The amount of each of the players stats that this bullet will take
-	const float onHitScalar = 0.4f,
-				explosionScalar = 2.0f,
-				spdScalar = 1.0f,
-				rngScalar = 0.5f;
+	const float onHitScalar = 0.13f,
+				explosionScalar = 0.7f,
+				spdScalar = 3.0f,
+				rngScalar = 1.5f;
 
 	//onHitDamage = HP dealt to enemy on hit
 	//explosionDamage = HP dealt to enemy during explosion
 	//speed  = How many units the bullet travels per second
 	//range  = How many units the bullet travels before being destroyed
-	float onHitDamage, explosionDamage, speed, range;
+	public static float onHitDamage = 0.4f, explosionDamage = 2.0f, speed = 9.0f, range = 4.5f;
 
 	//The number of shots for the player to fire per second
 	static float fireRate = 0.33f;
@@ -44,13 +44,7 @@ public class Shot_Cherry : MonoBehaviour
     }
 
 	//Takes the player's shot damage, shot speed, and shot range, and the direction in which to move
-	public void Initialise(float _plrDmg, float _plrSpd, float _plrRng, Vector2 _direction, Vector2 _plrVelocity) {
-
-		onHitDamage = _plrDmg * onHitScalar;
-		explosionDamage = _plrDmg * explosionScalar;
-		speed  = _plrSpd * spdScalar;
-		range  = _plrRng * rngScalar;
-
+	public void Initialise(Vector2 _direction, Vector2 _plrVelocity) {
 		existenceTimer = range / speed;
 
 		//Add significant velocity in the player's movement direction
@@ -74,5 +68,12 @@ public class Shot_Cherry : MonoBehaviour
 
 	public static float GetFireRate(float _plrFireRate) {
 		return _plrFireRate * fireRate;
+	}
+
+	public static void AddStats(float _damage, float _speed, float _range){
+		onHitDamage += _damage * onHitDamage;
+		explosionDamage += _damage * explosionScalar;
+		speed += _speed;
+		range += _range;
 	}
 }
