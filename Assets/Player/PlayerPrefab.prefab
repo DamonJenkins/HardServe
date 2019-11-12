@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 1584088827742550592}
   - component: {fileID: 1584088827742550593}
   - component: {fileID: 1584088827742550594}
+  - component: {fileID: 1672451060}
   m_Layer: 0
   m_Name: PlayerPrefab
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46,6 +47,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b5e783ed9f793a4ba65ffb2a57f5a4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprinkleShot: {fileID: 1166837807834004649, guid: adb9754029b60be42b985c525c5f158f,
+    type: 3}
+  chocolateShot: {fileID: 772233317730922096, guid: 1b10cfd0abfd7054d8fb423d5df0399b,
+    type: 3}
+  cherryShot: {fileID: 1117957331063512396, guid: 600942089e5865b458a45f79c44097a3,
+    type: 3}
 --- !u!58 &1584088827742550592
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -82,7 +89,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!212 &1584088827742550594
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -119,7 +126,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 4699842155992170130, guid: ce292836e5c25ff4ca0551a8428b97b8,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -132,3 +139,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1672451060
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1584088827742550597}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: dde77fd22b6deb443a78486b6714f480, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
