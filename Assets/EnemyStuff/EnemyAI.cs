@@ -18,6 +18,15 @@ public class EnemyAI : MonoBehaviour
     public float slowTimeMax = 4.0f;
     public float normalspeed;
     public float slowedSpeed;
+    public float currentDmgCd = 0.0f;
+    public float dmgCd = 1.5f;
+    public bool CanDoDmg = true;
+    //for charging enemy
+    public Vector2 chargeforce;
+    public bool isCharger = false;
+    bool ChargerCharging = false;
+
+
     bool isAlive = true;
     //Path the AI following
     Path path;
@@ -202,6 +211,18 @@ public class EnemyAI : MonoBehaviour
             enemyImg.localScale = new Vector3(enemyScaleX, enemyScaleY, 1f);
         }
     }
+    private void Update()
+    {
+        if(currentDmgCd >0 && CanDoDmg == false)
+        {
+            currentDmgCd -= Time.deltaTime;
+            if(currentDmgCd <= 0)
+            {
+                currentDmgCd = 0;
+                CanDoDmg = true;
+            }
+        }
+    }
 
     void PathComplete(Path p)
     {
@@ -282,21 +303,50 @@ public class EnemyAI : MonoBehaviour
         Vector2 force ;
         if (isSlowed)
         {
-            force = dir * slowedSpeed * Time.deltaTime * 180.0f;
+            force = dir * slowedSpeed * Time.deltaTime * 10.0f;
         }
         else
         {
-            force = dir * speed * Time.deltaTime * 180.0f;
+            force = dir * speed * Time.deltaTime * 10.0f;
         }
-
-        rb.AddForce(force);
+        chargeforce = force;
+        ChargerCharging = true;
         print("charging to player");
 
     }
 
+    public void keepCharging()
+    {
+        if(isCharger)
+        {
+            rb.AddForce(chargeforce);
+        }
+    }
+
+    public void cancellCharging()
+    {
+
+    }
+
+    public bool getChargingStatus()
+    {
+        return ChargerCharging;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        
         //do something when collided with other stuff
+        
+
+        if (collision.tag == "Player" && CanDoDmg)
+        {
+            //do damage
+            currentDmgCd = dmgCd;
+            CanDoDmg = false;
+        }
+
+        
     }
 
 }
