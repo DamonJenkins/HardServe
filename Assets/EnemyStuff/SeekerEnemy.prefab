@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2510098639022028540}
   - component: {fileID: 2510098639022028541}
   - component: {fileID: 2510098639022028542}
-  - component: {fileID: 2510098639022028543}
   - component: {fileID: 2510098639022028538}
   - component: {fileID: 2510098639022028537}
   m_Layer: 0
@@ -30,16 +29,16 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2510098639022028528}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.7578125}
-  m_LocalScale: {x: 0.2367463, y: 0.25659746, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 5.96, y: 3.64}
-  m_SizeDelta: {x: 4, y: 3}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1, y: 0.75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!58 &2510098639022028540
 CircleCollider2D:
@@ -54,9 +53,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.036539998, y: -0.15900025}
+  m_Offset: {x: 0, y: -0.05}
   serializedVersion: 2
-  m_Radius: 1.4
+  m_Radius: 0.3
 --- !u!50 &2510098639022028541
 Rigidbody2D:
   serializedVersion: 4
@@ -126,30 +125,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2510098639022028543
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2510098639022028528}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 676558d0ee5aad0408aad43fbb90404b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nexWayPointDistance: 1
-  maxHitPoint: 0
-  hitPoint: 0
-  speed: 200
-  dmg: 0
-  slowTime: 4
-  slowTimeMax: 4
-  normalspeed: 0
-  slowedSpeed: 0
-  target: {fileID: 0}
-  AstarObj: {fileID: 0}
-  enemyImg: {fileID: 0}
 --- !u!114 &2510098639022028538
 MonoBehaviour:
   m_ObjectHideFlags: 0
