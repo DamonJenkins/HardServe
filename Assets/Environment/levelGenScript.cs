@@ -6,10 +6,16 @@ public class levelGenScript : MonoBehaviour
 {
 
     [SerializeField]
-    private Transform wallParent, groundParent, holeParent, stoolParent, doorParent;
+    private Transform wallParent, groundParent, holeParent, stoolParent, doorParent, enemyParent;
 
     [SerializeField]
     private GameObject wallStraight, wallCorner, groundTile, hole, stool, door;
+
+    [SerializeField]
+    private List<GameObject> enemies;
+
+    [SerializeField]
+    private GameObject player, AStarObject;
 
     private const int levelRadiusH = 3, levelRadiusW = 7;
 
@@ -26,12 +32,17 @@ public class levelGenScript : MonoBehaviour
 
     public void LoadLevel(Vector2 lp)
     {
-
+        /*
         if (!vistedRooms.Contains(lp))
         {
-            //spawn enemies
+            GameObject temp = Instantiate(enemies[Random.Range(0, enemies.Count)], new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity, enemyParent);
+            if(temp.GetComponent<EnemyAI>() != null)
+            {
+                temp.GetComponent<EnemyAI>().target = player.transform;
+                temp.GetComponent<EnemyAI>().AstarObj = AStarObject.GetComponent<AstarPath>();
+            }
         }
-
+        */
         print(levelPos);
 
         foreach (Transform child in wallParent  ) Destroy(child.gameObject);
@@ -191,7 +202,7 @@ public class levelGenScript : MonoBehaviour
 
     public bool finished()
     {
-        return timeSinceLevelLoad > 2.0f;
+        return timeSinceLevelLoad > 1.0f && enemyParent.transform.childCount == 0;
     }
 
 }
