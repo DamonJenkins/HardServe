@@ -54,7 +54,8 @@ public class SeekAI : EnemyAI
     {
         //from 0 to 3: up,right,down,left
         //             0   1     2    3
-        float rolledDmg = Random.Range(70.0f, 150.0f);
+        //float rolledDmg = Random.Range(70.0f, 150.0f);
+        float bullDmg = 90.0f;
         Vector2 direction = Vector2.zero;
         switch (fireSlot)
         {
@@ -74,11 +75,13 @@ public class SeekAI : EnemyAI
                 break;
         }
         Vector2 finalVel;
-        float rolledSpd = Random.Range(5.0f, 15.0f);
-        finalVel = direction * rolledSpd;
+        //float rolledSpd = Random.Range(5.0f, 15.0f);
+        float bullspd = 7.0f;
+        finalVel = direction * bullspd;
 
 
 
-        GameObject.Instantiate(BigBoiBull, transform.position, Quaternion.identity).Initialize(rolledDmg, finalVel);
+        //GameObject.Instantiate(BigBoiBull, transform.position, Quaternion.identity).Initialize(rolledDmg, finalVel);
+        GameObject.Instantiate(BigBoiBull, transform.position, Quaternion.identity).Initialize(bullDmg, finalVel);
     }
 }
