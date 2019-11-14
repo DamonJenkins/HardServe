@@ -303,11 +303,11 @@ public class EnemyAI : MonoBehaviour
         Vector2 force ;
         if (isSlowed)
         {
-            force = dir * slowedSpeed * Time.deltaTime * 10.0f;
+            force = dir * slowedSpeed * Time.deltaTime * 8.0f;
         }
         else
         {
-            force = dir * speed * Time.deltaTime * 10.0f;
+            force = dir * speed * Time.deltaTime * 8.0f;
         }
         chargeforce = force;
         ChargerCharging = true;

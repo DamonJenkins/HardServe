@@ -8,6 +8,8 @@ public class WanderAI : EnemyAI
     public float chargingCooldown = 3.5f;
     public float currentCooldown = 0f;
     public bool isCharging = false;
+    public bool chargingX = false;
+    public bool chargingY = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,13 +34,35 @@ public class WanderAI : EnemyAI
         //    }
         //}
         //isCharging = getChargingStatus();
+
+        if(isCharging)
+        {
+            Vector2 tempVeloctiy;
+            tempVeloctiy = wanderRB.velocity;
+            if(Mathf.Abs(tempVeloctiy.x)>Mathf.Abs(tempVeloctiy.y))
+            {
+                chargingX = true;
+                chargingY = false;
+            }
+
+            if (Mathf.Abs(tempVeloctiy.x) < Mathf.Abs(tempVeloctiy.y))
+            {
+                chargingX = false;
+                chargingY = true;
+            }
+        }
+        else
+        {
+            chargingX = false;
+            chargingY = false;
+        }
         if((isCharging == false) && (currentCooldown >0) )
         {
             currentCooldown -= Time.deltaTime;
             if (currentCooldown <= 0)
             {
                 currentCooldown = 0;
-                WanderFunc();
+               // WanderFunc();
                // print("update called wanderfunc");
             }
         }
@@ -54,7 +78,7 @@ public class WanderAI : EnemyAI
     }
     private void FixedUpdate()
     {
-        if ((isCharging == false) && (currentCooldown > 0))
+        if ((isCharging == false) && (currentCooldown >= 0))
         {
             WanderFixedUpdate();
         }
@@ -74,11 +98,68 @@ public class WanderAI : EnemyAI
        
         if (collision.gameObject.tag != "Default" && isCharging)
         {
+            if(collision.gameObject.tag == "Wall")
+            {
+
+                if(chargingX)
+                {
+                    if(wanderRB.velocity.x > 0)
+                    {
+                        if(collision.gameObject.transform.localPosition.x > wanderRB.transform.localPosition.x)
+                        {
+                            print("collided with something!");
+                            isCharging = false;
+                            currentCooldown = chargingCooldown;
+                            WanderFunc();
+                        }
+                    }
+                    else
+                    {
+                        if (collision.gameObject.transform.localPosition.x < wanderRB.transform.localPosition.x)
+                        {
+                            print("collided with something!");
+                            isCharging = false;
+                            currentCooldown = chargingCooldown;
+                            WanderFunc();
+                        }
+                    }
+                    
+                }
+
+                if (chargingY)
+                {
+                    if (wanderRB.velocity.y > 0)
+                    {
+                        if (collision.gameObject.transform.localPosition.y > wanderRB.transform.localPosition.y)
+                        {
+                            print("collided with something!");
+                            isCharging = false;
+                            currentCooldown = chargingCooldown;
+                            WanderFunc();
+                        }
+                    }
+                    else
+                    {
+                        if (collision.gameObject.transform.localPosition.y < wanderRB.transform.localPosition.y)
+                        {
+                            print("collided with something!");
+                            isCharging = false;
+                            currentCooldown = chargingCooldown;
+                            WanderFunc();
+                        }
+                    }
+
+                }
+            }else
+            {
+                print("collided with something!");
+                isCharging = false;
+                currentCooldown = chargingCooldown;
+                WanderFunc();
+            }
+
             
-            print("collided with something!");
-            isCharging = false;
-            currentCooldown = chargingCooldown;
-            WanderFunc();
+            
         }
     }
 
