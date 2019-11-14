@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4559873363291474651}
   - component: {fileID: 4559873363291474655}
   - component: {fileID: 2130842281113729196}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: WanderEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -185,3 +185,5 @@ MonoBehaviour:
   chargingCooldown: 3.5
   currentCooldown: 3.5
   isCharging: 0
+  chargingX: 0
+  chargingY: 0
