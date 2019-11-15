@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3922485509074595530}
   - component: {fileID: 3922485509074595534}
   - component: {fileID: 3922485509074595533}
+  - component: {fileID: 4016157396680319502}
   m_Layer: 12
   m_Name: BigBoiSeekerEnemy
   m_TagString: Untagged
@@ -30,7 +31,7 @@ RectTransform:
   m_GameObject: {fileID: 3922485509074595524}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -168,7 +169,7 @@ MonoBehaviour:
   nexWayPointDistance: 1
   maxHitPoint: 200
   hitPoint: 200
-  speed: 75
+  speed: 45
   dmg: 5
   slowTime: 4
   slowTimeMax: 4
@@ -195,3 +196,22 @@ MonoBehaviour:
   - 2
   BigBoiBull: {fileID: 4381031263180328637, guid: 82adc786bec38df45986450c6c0613be,
     type: 3}
+--- !u!95 &4016157396680319502
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3922485509074595524}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7ab212513e3f60149a4043bb76f10ccb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

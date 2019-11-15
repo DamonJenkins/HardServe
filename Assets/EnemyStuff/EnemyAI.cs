@@ -38,7 +38,7 @@ public class EnemyAI : MonoBehaviour
 
     Seeker seeker;
     Rigidbody2D rb;
-    
+    Animator myAnimator;
     public Transform enemyImg;
     float enemyScaleX;
     float enemyScaleY;
@@ -52,6 +52,8 @@ public class EnemyAI : MonoBehaviour
         
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
+        myAnimator = GetComponent<Animator>();
+        //myAnimator.transform.localScale *= 0.25f;
         //InvokeRepeating("UpdatePathGen",0f,0.5f);
 
     }
@@ -222,6 +224,13 @@ public class EnemyAI : MonoBehaviour
                 CanDoDmg = true;
             }
         }
+
+        
+        
+        //myAnimator.SetBool("GoingLeft", rb.velocity.x < 0.0f);
+        //myAnimator.SetBool("GoingRight", rb.velocity.x > 0.0f);
+        //myAnimator.SetBool("GoingUp", rb.velocity.y > 0.0f);
+        //myAnimator.SetBool("GoingDown", rb.velocity.y < 0.0f);
     }
 
     void PathComplete(Path p)
