@@ -21,7 +21,11 @@ public class doorControl : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "player") levelGenScript.LoadLevel(levelGenScript.moveLevelPos(direction));
+        if (collision.tag == "Player" && levelGenScript.finished())
+        {
+            levelGenScript.LoadLevel(levelGenScript.moveLevelPos(direction));
+            collision.gameObject.transform.position -= new Vector3(direction.x * 13, direction.y * 5, 0.0f);
+        }
     }
 
     public void setDirection(Vector2 v){

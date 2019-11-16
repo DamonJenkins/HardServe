@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6448533318023115832}
   - component: {fileID: 6036851022508659695}
   - component: {fileID: -977098250302535139}
+  - component: {fileID: 6247402060158540865}
   m_Layer: 11
   m_Name: Prefab_Cherry_Stage2
   m_TagString: Untagged
@@ -61,6 +62,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 753dcbcdb90ffcf41bf63ea5f0559f05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  exploded: 0
 --- !u!212 &-977098250302535139
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -98,7 +100,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 9a7f7733160f2c249826c61f40d7876a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6d59934324c21c948a00bb57a036e09a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -109,3 +111,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &6247402060158540865
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3387031482380394355}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1a451dfcab8ee6246a5f0d8ffca4b7ba, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

@@ -6,17 +6,24 @@ public class levelGenScript : MonoBehaviour
 {
 
     [SerializeField]
-    private Transform wallParent, groundParent, holeParent, stoolParent, doorParent;
+    private Transform wallParent, groundParent, holeParent, stoolParent, doorParent, enemyParent;
 
     [SerializeField]
     private GameObject wallStraight, wallCorner, groundTile, hole, stool, door;
 
     [SerializeField]
-    private const int levelRadiusH = 4, levelRadiusW = 8;
+    private List<GameObject> enemies;
+
+    [SerializeField]
+    private GameObject player, AStarObject;
+
+    private const int levelRadiusH = 3, levelRadiusW = 7;
 
     private Vector2 levelPos = new Vector2(0.0f, 0.0f);
     private List<GameObject> doors;
     private List<Vector2> vistedRooms;
+
+    private float timeSinceLevelLoad = 0.0f;
 
     public Vector2 moveLevelPos(Vector2 v)
     {
@@ -25,12 +32,17 @@ public class levelGenScript : MonoBehaviour
 
     public void LoadLevel(Vector2 lp)
     {
-
+        /*
         if (!vistedRooms.Contains(lp))
         {
-            //spawn enemies
+            GameObject temp = Instantiate(enemies[Random.Range(0, enemies.Count)], new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity, enemyParent);
+            if(temp.GetComponent<EnemyAI>() != null)
+            {
+                temp.GetComponent<EnemyAI>().target = player.transform;
+                temp.GetComponent<EnemyAI>().AstarObj = AStarObject.GetComponent<AstarPath>();
+            }
         }
-
+        */
         print(levelPos);
 
         foreach (Transform child in wallParent  ) Destroy(child.gameObject);
@@ -44,6 +56,10 @@ public class levelGenScript : MonoBehaviour
         Random.InitState(Mathf.FloorToInt(hash21(lp) * 1000000.0f));
 
         bool[,] tiles = new bool[levelRadiusW * 2, levelRadiusH * 2];
+        bool[,] stools = new bool[levelRadiusW * 2, levelRadiusH * 2];
+
+        int holeRule = Random.Range(0, 5);
+        int stoolRule = Random.Range(0, 5);
 
         //Corners
         Instantiate(wallCorner, new Vector3(-levelRadiusW, -levelRadiusH), Quaternion.Euler(0.0f, 0.0f, 180.0f), wallParent);
@@ -59,7 +75,8 @@ public class levelGenScript : MonoBehaviour
             for (int y = 0; y < levelRadiusH * 2; y++)
             {
                 //Setting tile existence
-                tiles[x, y] = Random.Range(0.0f, 1.0f) < 0.8f || x == 0 || y == 0 || y == levelRadiusH * 2 - 1 || x == levelRadiusW * 2 - 1;
+                tiles[x, y] = !IsHole(x,y, holeRule);
+                stools[x, y] = IsStool(x, y, stoolRule);
 
                 Instantiate(
                     tiles[x, y] ? groundTile : hole,
@@ -69,7 +86,7 @@ public class levelGenScript : MonoBehaviour
                 );
 
                 //Stools
-                if (tiles[x, y] && Random.value > 0.85f && !(x == 0 || y == 0 || y == levelRadiusH * 2 - 1 || x == levelRadiusW * 2 - 1)) Instantiate(
+                if (tiles[x, y] && stools[x,y]) Instantiate(
                       stool,
                       new Vector3(x - levelRadiusW, levelRadiusH + 1 - y),
                       Quaternion.identity,
@@ -90,7 +107,7 @@ public class levelGenScript : MonoBehaviour
 
         foreach(Transform child in groundParent)
         {
-            child.gameObject.GetComponent<SpriteRenderer>().sortingOrder = 1 - levelRadiusH - (int)child.position.y;
+            child.gameObject.GetComponent<SpriteRenderer>().sortingOrder = - 5 - levelRadiusH - (int)child.position.y;
         }
 
         if (hash21(levelPos + new Vector2(0.5f, 0.0f)) > 0.2f)
@@ -115,6 +132,7 @@ public class levelGenScript : MonoBehaviour
         }
 
         Random.state = oldState;
+        timeSinceLevelLoad = 0.0f;
     }
 
     // Start is called before the first frame update
@@ -125,9 +143,46 @@ public class levelGenScript : MonoBehaviour
         LoadLevel(levelPos);
     }
 
+    bool IsHole(int x, int y, int rule)
+    {
+        switch (rule)
+        {
+            case 0:
+                return (x == 1 || x == 2 * levelRadiusW - 2) && (y != 0 && y != levelRadiusH * 2 - 1);
+            case 1:
+                return (y == 1 || y == 2 * levelRadiusH - 2) && (x != 0 && x != levelRadiusW * 2 - 1 && x != 1 && x != levelRadiusW * 2 - 2);
+            case 2:
+                return (x == levelRadiusW || x == levelRadiusW - 1) && (y == levelRadiusH || y == levelRadiusH - 1);
+            case 3:
+                return (x == levelRadiusW - 2 || x == levelRadiusW + 1) && (y != 0 && y != levelRadiusH * 2 - 1) || (x == levelRadiusW - 3 && y == levelRadiusH + 1) || (x == levelRadiusW + 2 && y == levelRadiusH + 1);
+            case 4:
+                return false;
+        }
+        return false;
+    }
+
+    bool IsStool(int x, int y, int rule)
+    {
+        switch (rule)
+        {
+            case 0:
+                return (x + y * 13) % 18 == 0;
+            case 1:
+                return (x == 0 && y == 0) || (x == levelRadiusW * 2 - 1 && y == levelRadiusH * 2 - 1) || (x == levelRadiusW || x == levelRadiusW - 1) && (y == levelRadiusH || y == levelRadiusH - 1); ;
+            case 2:
+                return false;
+            case 3:
+                return false;
+            case 4:
+                return false;
+        }
+        return false;
+    }
+
     // Update is called once per frame
     void Update()
     {
+        timeSinceLevelLoad += Time.deltaTime;
     }
 
     float fract(float f)
@@ -143,6 +198,11 @@ public class levelGenScript : MonoBehaviour
     float hash21(Vector2 p)
     {
         return fract(Mathf.Sin(Vector2.Dot(p, new Vector2(12.9898f, 78.233f) * 43758.5453123f)));
+    }
+
+    public bool finished()
+    {
+        return timeSinceLevelLoad > 1.0f && enemyParent.transform.childCount == 0;
     }
 
 }
