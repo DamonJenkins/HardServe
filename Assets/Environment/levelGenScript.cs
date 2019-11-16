@@ -62,10 +62,10 @@ public class levelGenScript : MonoBehaviour
         int stoolRule = Random.Range(0, 5);
 
         //Corners
-        Instantiate(wallCorner, new Vector3(-levelRadiusW, -levelRadiusH), Quaternion.Euler(0.0f, 0.0f, 180.0f), wallParent);
-        Instantiate(wallCorner, new Vector3(1 + levelRadiusW, 1 - levelRadiusH), Quaternion.Euler(0.0f, 0.0f, -90.0f), wallParent);
-        Instantiate(wallCorner, new Vector3(levelRadiusW, 2 + levelRadiusH), Quaternion.Euler(0.0f, 0.0f, 0.0f), wallParent);
-        Instantiate(wallCorner, new Vector3(-1 - levelRadiusW, 1 + levelRadiusH), Quaternion.Euler(0.0f, 0.0f, 90.0f), wallParent);
+        Instantiate(wallCorner, new Vector3(-levelRadiusW, -levelRadiusH + 1), Quaternion.Euler(0.0f, 0.0f, 90.0f), wallParent);
+        Instantiate(wallCorner, new Vector3(levelRadiusW, 1 - levelRadiusH), Quaternion.Euler(0.0f, 0.0f, 180.0f), wallParent);
+        Instantiate(wallCorner, new Vector3(levelRadiusW, 1 + levelRadiusH), Quaternion.Euler(0.0f, 0.0f, -90.0f), wallParent);
+        Instantiate(wallCorner, new Vector3(- levelRadiusW, 1 + levelRadiusH), Quaternion.Euler(0.0f, 0.0f, 0.0f), wallParent);
         //Fill
         for (int x = 0; x < levelRadiusW * 2; x++)
         {
