@@ -58,13 +58,24 @@ public class Shot_Sprinkle : MonoBehaviour
 	}
 
 	private void OnCollisionEnter2D(Collision2D _collision){
-        //TODO: Uncomment
-        //Enemy hitEnemy = _collision.gameObject.GetComponent<Enemy>();
-        //if (hitEnemy != null) {
-        //	hitEnemy.Damage(damage);
-        //}
+		EnemyAI hitEnemy = _collision.gameObject.GetComponent<EnemyAI>();
+		if (hitEnemy != null)
+		{
+			hitEnemy.receiveDmg(damage);
+		}
+		//else {
+		//	SeekAI hitSeek = _collision.gameObject.GetComponent<SeekAI>();
+		//	if (hitSeek != null)
+		//	{
+		//		hitSeek.receiveDmg(damage);
+		//	}
+		//	else
+		//	{
 
-        Destroy(gameObject);
+		//	}
+		//}
+
+		Destroy(gameObject);
     }
 
 	public static float GetFireRate(float _plrFireRate) {

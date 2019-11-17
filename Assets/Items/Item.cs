@@ -29,23 +29,27 @@ public class Item : MonoBehaviour
     }
 
 	private void OnTriggerEnter2D(Collider2D _collision){
-		//TODO: Make pop-up saying which item they picked up
 
-		_collision.gameObject.GetComponent<Player>().AddStats(
-			thisInfo.moveSpeedIncrease,
-			thisInfo.maxHealthIncrease,
-			thisInfo.maxAmmoIncrease,
-			thisInfo.rechargeRateIncrease,
-			thisInfo.fireRateIncrease,
-			thisInfo.damageIncrease,
-			thisInfo.shotSpeedIncrease,
-			thisInfo.rangeIncrease
-		);
+		Player plr = _collision.gameObject.GetComponent<Player>();
 
-		//AudioSource.PlayClipAtPoint(thisInfo.pickupSound, transform.position);
+		if (plr != null)
+		{
+			plr.AddStats(
+				thisInfo.moveSpeedIncrease,
+				thisInfo.maxHealthIncrease,
+				thisInfo.maxAmmoIncrease,
+				thisInfo.rechargeRateIncrease,
+				thisInfo.fireRateIncrease,
+				thisInfo.damageIncrease,
+				thisInfo.shotSpeedIncrease,
+				thisInfo.rangeIncrease
+			);
 
-		FindObjectOfType<HUDManager>().PickedUpItem(thisInfo.itemName, thisInfo.itemDescription);
+			//AudioSource.PlayClipAtPoint(thisInfo.pickupSound, transform.position);
 
-		Destroy(gameObject);
+			FindObjectOfType<HUDManager>().PickedUpItem(thisInfo.itemName, thisInfo.itemDescription);
+
+			Destroy(gameObject);
+		}
 	}
 }

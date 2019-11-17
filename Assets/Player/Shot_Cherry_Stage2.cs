@@ -38,7 +38,7 @@ public class Shot_Cherry_Stage2 : MonoBehaviour
 			GetComponent<Animator>().SetTrigger("Explode");
 			foreach (GameObject enemy in enemiesInRange)
 			{
-				//enemy.GetComponent<Enemy>().Damage(Shot_Cherry.explosionDamage);
+				enemy.GetComponent<EnemyAI>().receiveDmg(Shot_Cherry.explosionDamage);
 			}
 		}
     }

@@ -16,10 +16,10 @@ public class SeekAI : EnemyAI
     // Update is called once per frame
     private void Update()
     {
-        checkDead();
-    }
+		
+	}
     private void FixedUpdate()
     {
         SeekerFixedUpdate();
-    }
+	}
 }

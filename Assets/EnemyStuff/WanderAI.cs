@@ -17,7 +17,6 @@ public class WanderAI : EnemyAI
     // Update is called once per frame
     private void Update()
     {
-        checkDead();
         if(isCharging)
         {
             currentCooldown -= Time.deltaTime;
@@ -33,8 +32,6 @@ public class WanderAI : EnemyAI
             ChargeToPlayer();
             isCharging = true;
         }
-        
-        //print("Distance to player: " + getDistToPlayer());
 
     }
     private void FixedUpdate()
@@ -44,8 +41,6 @@ public class WanderAI : EnemyAI
             WanderFixedUpdate();
         }
     }
-
-    
 }
 
 

@@ -19,7 +19,7 @@ public class Shot_Chocolate : MonoBehaviour
 	static float fireRate = 50.0f;
 
 	//TODO: Figure out if this should be multiplicative or additive
-	float slowAmount = 0.2f;
+	float slowAmount = 1.5f;
 
 	//How long the bullet has left until it is destroyed
 	float existenceTimer;
@@ -50,14 +50,14 @@ public class Shot_Chocolate : MonoBehaviour
 
 	private void OnCollisionEnter2D(Collision2D _collision)
 	{
-        //TODO: Uncomment
-        //Enemy hitEnemy = _collision.gameObject.GetComponent<Enemy>();
-        //if (hitEnemy != null) {
-        //	hitEnemy.Damage(damage);
-        //	hitEnemy.SlowBy(slowAmount);
-        //}
+		EnemyAI hitEnemy = _collision.gameObject.GetComponent<EnemyAI>();
+		if (hitEnemy != null)
+		{
+			hitEnemy.receiveDmg(damage);
+			hitEnemy.SlowDown(slowAmount);
+		}
 
-        Destroy(gameObject);
+		Destroy(gameObject);
     }
 
 	public static float GetFireRate(float _plrFireRate) {

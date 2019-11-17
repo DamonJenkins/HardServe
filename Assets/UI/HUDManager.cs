@@ -68,11 +68,9 @@ public class HUDManager : MonoBehaviour
     }
 
 	public void PickedUpItem(string _name, string _description) {
-
 		GameObject.Find("ItemName").GetComponent<Text>().text = _name;
 		GameObject.Find("ItemDesc").GetComponent<Text>().text = _description;
 
-		itemPopupAnimator.SetTrigger("KillAnimation");
-		itemPopupAnimator.SetTrigger("PickedUpItem");
+		itemPopupAnimator.Play("ItemPopupAnim", -1, 0.0f);
 	}
 }

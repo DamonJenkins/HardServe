@@ -394,7 +394,7 @@ PrefabInstance:
     - target: {fileID: 8717311583811058794, guid: 48c4f6a79afae234d9da7b6bb88e510b,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 57.059937
+      value: 57.060547
       objectReference: {fileID: 0}
     - target: {fileID: 6176057536022907510, guid: 48c4f6a79afae234d9da7b6bb88e510b,
         type: 3}
@@ -525,6 +525,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8717311582706359135, guid: 48c4f6a79afae234d9da7b6bb88e510b,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 57.09961
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 48c4f6a79afae234d9da7b6bb88e510b, type: 3}
@@ -799,6 +804,7 @@ MonoBehaviour:
   holeParent: {fileID: 594911953}
   stoolParent: {fileID: 0}
   doorParent: {fileID: 0}
+  enemyParent: {fileID: 0}
   wallStraight: {fileID: 5684357618654421915, guid: 8c48bb4f106c5064c853c0a223dfc9a6,
     type: 3}
   wallCorner: {fileID: 7606193442902921733, guid: 0ab7ee6e4b8fa144a8c8d4ae3e413174,
@@ -808,6 +814,9 @@ MonoBehaviour:
   hole: {fileID: 3163401595788601467, guid: d9cdd4438cce8e04b8c8f0057c79d196, type: 3}
   stool: {fileID: 2100054753040793674, guid: 28b2c4d665e79a54a8bbb7b0a6c401a4, type: 3}
   door: {fileID: 0}
+  enemies: []
+  player: {fileID: 0}
+  AStarObject: {fileID: 0}
 --- !u!4 &1636275511
 Transform:
   m_ObjectHideFlags: 0
