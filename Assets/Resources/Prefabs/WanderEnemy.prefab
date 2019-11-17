@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4559873363291474651}
   - component: {fileID: 4559873363291474655}
   - component: {fileID: 2130842281113729196}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: WanderEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,14 +166,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nexWayPointDistance: 1
-  maxHitPoint: 300
-  hitPoint: 300
+  maxHitPoint: 10
+  hitPoint: 10
   speed: 200
-  dmg: 0
-  slowTime: 0
-  slowTimeMax: 4
   normalspeed: 200
-  slowedSpeed: 100
+  dmg: 0
   target: {fileID: 0}
   AstarObj: {fileID: 0}
   enemyImg: {fileID: 4559873363291474654}

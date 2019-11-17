@@ -32,18 +32,7 @@ public class levelGenScript : MonoBehaviour
 
     public void LoadLevel(Vector2 lp)
     {
-        /*
-        if (!vistedRooms.Contains(lp))
-        {
-            GameObject temp = Instantiate(enemies[Random.Range(0, enemies.Count)], new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity, enemyParent);
-            if(temp.GetComponent<EnemyAI>() != null)
-            {
-                temp.GetComponent<EnemyAI>().target = player.transform;
-                temp.GetComponent<EnemyAI>().AstarObj = AStarObject.GetComponent<AstarPath>();
-            }
-        }
-        */
-        print(levelPos);
+		print(levelPos);
 
         foreach (Transform child in wallParent  ) Destroy(child.gameObject);
         foreach (Transform child in groundParent) Destroy(child.gameObject);
@@ -130,6 +119,31 @@ public class levelGenScript : MonoBehaviour
             doors.Add(Instantiate(door, new Vector3(0.5f, -levelRadiusH), Quaternion.Euler(0.0f, 0.0f, 180.0f), doorParent));
             doors[doors.Count - 1].GetComponent<doorControl>().setDirection(new Vector2(0.0f, -1.0f));
         }
+
+		if (!vistedRooms.Contains(lp)){
+			vistedRooms.Add(lp);
+			int enemyNum = 1;
+			int enemyChance = 0;
+
+			List<Transform> possiblePositions = new List<Transform>((Transform[])groundParent.GetComponentsInChildren<Transform>().Clone());
+
+			while (enemyChance < 1){
+				int posInd = Random.Range(0, possiblePositions.Count);
+
+				Vector3 prefabPos = possiblePositions[posInd].position + new Vector3(0.5f, -0.5f, 0.0f);
+
+				possiblePositions.RemoveAt(posInd);
+
+				GameObject temp = Instantiate(enemies[Random.Range(0, enemies.Count)], prefabPos, Quaternion.identity, enemyParent);
+				if (temp.GetComponent<EnemyAI>() != null)
+				{
+					temp.GetComponent<EnemyAI>().target = player.transform;
+					temp.GetComponent<EnemyAI>().AstarObj = AStarObject.GetComponent<AstarPath>();
+				}
+
+				enemyChance = Random.Range(0, ++enemyNum);
+			}
+		}
 
         Random.state = oldState;
         timeSinceLevelLoad = 0.0f;

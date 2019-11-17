@@ -5,20 +5,18 @@ using Pathfinding;
 
 public class EnemyAI : MonoBehaviour
 {
-    
-    
     public float nexWayPointDistance = 3f;
 
     public float maxHitPoint;
     public float hitPoint;
+
     public float speed;
-    public float dmg;
-    bool isSlowed = false;
-    public float slowTime = 0.0f;
-    public float slowTimeMax = 4.0f;
     public float normalspeed;
-    public float slowedSpeed;
-    bool isAlive = true;
+    float slowAmount = 0.0f;
+	float slowScalar = 1.25f;
+
+	public float dmg;
+	bool isAlive = true;
     //Path the AI following
     Path path;
     //Setup Astar pathfinding
@@ -43,8 +41,9 @@ public class EnemyAI : MonoBehaviour
         
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
-        //InvokeRepeating("UpdatePathGen",0f,0.5f);
 
+		target = GameObject.Find("PlayerPrefab").GetComponent<Transform>();
+		AstarObj = GameObject.Find("A_ Obj").GetComponent<AstarPath>();
     }
 
     public void seekFunc()
@@ -102,26 +101,12 @@ public class EnemyAI : MonoBehaviour
             reachedEnd = false;
         }
 
-        if(isSlowed == false)
-        {
-            speed = normalspeed;
-        }
-        else
-        {
-            speed = slowedSpeed;
-        }
+		speed = normalspeed - (slowAmount * Mathf.Log(slowScalar));
 
-        if(slowTime >0.0f)
-        {
-            slowTime -= Time.deltaTime;
-        }
-        else
-        {
-            isSlowed = false;
-            slowTime = slowTimeMax;
-        }
+		slowAmount -= Time.deltaTime;
+		slowAmount = slowAmount <= 0.0f ? 0.0f : slowAmount;
 
-        Vector2 dir =((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
+		Vector2 dir =((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
         Vector2 force = dir * speed * Time.deltaTime;
 
         rb.AddForce(force);
@@ -161,26 +146,12 @@ public class EnemyAI : MonoBehaviour
             reachedEnd = false;
         }
 
-        if (isSlowed == false)
-        {
-            speed = normalspeed;
-        }
-        else
-        {
-            speed = slowedSpeed;
-        }
+		speed = normalspeed - (slowAmount * Mathf.Log(slowScalar));
 
-        if (slowTime > 0.0f)
-        {
-            slowTime -= Time.deltaTime;
-        }
-        else
-        {
-            isSlowed = false;
-            slowTime = slowTimeMax;
-        }
+		slowAmount -= Time.deltaTime;
+		slowAmount = slowAmount <= 0.0f ? 0.0f : slowAmount;
 
-        Vector2 dir = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
+		Vector2 dir = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
         Vector2 force = dir * speed * Time.deltaTime;
 
         rb.AddForce(force);
@@ -212,35 +183,18 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-   public void slowdown(float val)
+   public void SlowDown(float val)
     {
-        isSlowed = true;
-        slowedSpeed = val;
+		slowAmount += val;
     }
 
     public void receiveDmg(float Dmgval)
     {
         hitPoint -= Dmgval;
-        if(hitPoint <= 0)
+        if(hitPoint <= 0.0f)
         {
-            hitPoint = 0;
-        }
-    }
-
-    public void checkDead()
-    {
-        if(hitPoint == 0)
-        {
-            isAlive = false;
-            deadFunc();
-        }
-    }
-
-    public void deadFunc()
-    {
-        //do something when dead
-        print("Oof one of the enemies just died");
-        Destroy(gameObject);
+			Destroy(gameObject);
+		}
     }
 
     public Vector3 BFSWanderPoint()
@@ -279,24 +233,31 @@ public class EnemyAI : MonoBehaviour
         playerLoc.x = target.position.x;
         playerLoc.y = target.position.y;
         Vector2 dir = (playerLoc - rb.position).normalized;
-        Vector2 force ;
-        if (isSlowed)
-        {
-            force = dir * slowedSpeed * Time.deltaTime * 180.0f;
-        }
-        else
-        {
-            force = dir * speed * Time.deltaTime * 180.0f;
-        }
+        Vector2 force;
 
-        rb.AddForce(force);
-        print("charging to player");
+		force = dir * speed * Time.deltaTime * 180.0f;
 
+		rb.AddForce(force);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D _collision)
     {
-        //do something when collided with other stuff
-    }
+		Player hitPlayer = _collision.gameObject.GetComponent<Player>();
+		if (hitPlayer != null)
+		{
+			hitPlayer.Damage(1);
+		}
+	}
 
+	public void OnDestroy()
+	{
+		if (Random.Range(0, 8) < 1)
+		{
+			Instantiate(Resources.Load("Prefabs/ItemPrefab"), transform.position, Quaternion.identity);
+		}
+		else if(Random.Range(0, 5) < 1)
+		{
+			Instantiate(Resources.Load("Prefabs/HealthUp"), transform.position, Quaternion.identity);
+		}
+	}
 }

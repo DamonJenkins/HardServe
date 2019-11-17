@@ -57,7 +57,7 @@ public class Shot_Cherry : MonoBehaviour
         //TODO: Uncomment
         EnemyAI hitEnemy = _collision.gameObject.GetComponent<EnemyAI>();
         if (hitEnemy != null) {
-        	//hitEnemy.Damage(damage);
+        	hitEnemy.receiveDmg(onHitDamage);
             GameObject.Instantiate(explosionObject, transform.position, Quaternion.identity, hitEnemy.transform);
         }else{
             GameObject.Instantiate(explosionObject, transform.position, Quaternion.identity);

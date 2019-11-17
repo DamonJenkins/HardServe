@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2510098639022028542}
   - component: {fileID: 2510098639022028538}
   - component: {fileID: 2510098639022028537}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: SeekerEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,14 +166,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nexWayPointDistance: 1
-  maxHitPoint: 200
-  hitPoint: 200
+  maxHitPoint: 8
+  hitPoint: 8
   speed: 200
-  dmg: 5
-  slowTime: 4
-  slowTimeMax: 4
   normalspeed: 200
-  slowedSpeed: 120
+  dmg: 5
   target: {fileID: 0}
   AstarObj: {fileID: 0}
   enemyImg: {fileID: 2510098639022028539}

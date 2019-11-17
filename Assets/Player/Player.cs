@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour{
 	//Event broadcasting
@@ -21,14 +22,18 @@ public class Player : MonoBehaviour{
 	int maxHealth = 3;
 	int currentHealth = 3;
 
-	float[] shotTimers = { 0.0f, 0.0f, 0.0f };
+	const float invulnTime = 1.0f;
+	float invulnTimer;
 
-    float[] maxAmmo    = { 8.0f, 250.0f, 1.0f };
+	float[] shotTimers = { 0.0f, 0.0f, 0.0f };
+	bool shootButtonDown = false;
+
+    float[] maxAmmo    = { 8.0f, 100.0f, 1.0f };
     float[] weaponAmmo = { 0.0f, 0.0f, 0.0f };
-	float[] ammoIncScalars = { 2.0f, 10.0f, 1.0f };
+	float[] ammoIncScalars = { 2.6f, 33.0f, 1.0f };
 
 	//Amount per second to refill weaponAmmo by
-	float[] rechargeRates = { 0.93f, 25.0f, 0.05f };
+	float[] rechargeRates = { 0.93f, 10.0f, 0.05f };
 	float[] rechargeIncScalars = { 0.31f, 8.3f, 0.016f };
 
 	float[] fireRates = { 1.5f, 50.0f, 0.33f };
@@ -48,8 +53,13 @@ public class Player : MonoBehaviour{
 			}
 
 			if (weaponAmmo[i] < maxAmmo[i]) {
+				if (i == currentWeapon && shootButtonDown) continue;
 				weaponAmmo[i] += (rechargeRates[i] * Time.deltaTime);
 			}
+		}
+
+		if (invulnTimer > 0.0f) {
+			invulnTimer -= Time.deltaTime;
 		}
 
         Vector2 tempVelocity = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
@@ -65,7 +75,9 @@ public class Player : MonoBehaviour{
         myAnimator.SetBool("GoingUp", plrVel.y > 0.0f);
         myAnimator.SetBool("GoingDown", plrVel.y < 0.0f);
 
-        if (CanShoot()) {
+		shootButtonDown = (Input.GetButton("FireU") || Input.GetButton("FireD") || Input.GetButton("FireL") || Input.GetButton("FireR"));
+
+		if (CanShoot()) {
             if (Input.GetButton("FireU")){
 				switch (currentWeapon) {
 					case (0): { ShootSprinkle(new Vector2(0.0f, 1.0f)); break; }
@@ -160,6 +172,7 @@ public class Player : MonoBehaviour{
 	public void AddStats(float _moveSpeed, int _maxHealth, float _maxAmmo, float _rechargeRate, float _fireRate, float _damage, float _shotSpeed, float _range) {
 		maxSpeed = Mathf.Min(maxSpeed + (_moveSpeed * 2.3f), maxMaxSpeed);
 		maxHealth += _maxHealth;
+		currentHealth += _maxHealth;
 		maxAmmo[currentWeapon] += _maxAmmo * ammoIncScalars[currentWeapon];
 		rechargeRates[currentWeapon] += _rechargeRate * rechargeIncScalars[currentWeapon];
 		fireRates[currentWeapon] += _fireRate * fireRatesInScalars[currentWeapon];
@@ -186,9 +199,14 @@ public class Player : MonoBehaviour{
 	 
 	public void Damage(int _amount) {
 		//TODO: Play animation
-		currentHealth -= _amount;
-		if (currentHealth <= 0) { 
-			//TODO: Kill
+		if (invulnTimer <= 0.0f)
+		{
+			invulnTimer = invulnTime;
+			currentHealth -= _amount;
+			if (currentHealth <= 0)
+			{
+				SceneManager.LoadScene("gameOverScene");
+			}
 		}
 	}
 

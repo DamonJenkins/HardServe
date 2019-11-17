@@ -17,7 +17,6 @@ public class WanderAI : EnemyAI
     // Update is called once per frame
     private void Update()
     {
-        checkDead();
         if(isCharging)
         {
             currentCooldown -= Time.deltaTime;
@@ -33,8 +32,6 @@ public class WanderAI : EnemyAI
             ChargeToPlayer();
             isCharging = true;
         }
-        
-        //print("Distance to player: " + getDistToPlayer());
 
     }
     private void FixedUpdate()
@@ -44,24 +41,4 @@ public class WanderAI : EnemyAI
             WanderFixedUpdate();
         }
     }
-
-    
 }
-
-
-    //public void MakeRandNode()
-    //{
-    //    if (!Wai.pathPending && (Wai.reachedEndOfPath || !Wai.hasPath))
-    //    {
-    //        Wai.destination = PickRandomPoint();
-    //        Wai.SearchPath();
-    //    }
-    //}
-
-    //Vector2 PickRandomPoint()
-    //{
-    //    var point = Random.insideUnitSphere * WanderRadius;
-
-    //    point.z = 0;
-    //    point += transform.position;
-    //    return point;
