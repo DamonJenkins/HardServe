@@ -4,6 +4,304 @@ using UnityEngine;
 
 public class levelGenScript : MonoBehaviour
 {
+    const bool H = false;
+    const bool T = true;
+
+    bool[,,] tileRules =
+    {
+        {   {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,H,T,T,T,T,H,H,T,T,T,T,H,T},
+            {T,T,T,H,T,T,T,T,T,T,H,T,T,T},
+            {T,T,T,H,T,T,T,T,T,T,H,T,T,T},
+            {T,H,T,T,T,T,H,H,T,T,T,T,H,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T}},//1
+        {   {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,H,T,T,T,T,T,T,T,T,T,T,H,T},
+            {T,H,H,T,T,H,H,H,H,T,T,H,H,T},
+            {T,H,H,T,T,H,H,H,H,T,T,H,H,T},
+            {T,H,T,T,T,T,T,T,T,T,T,T,H,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T}},//2
+        {   {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,H,T,T,H,T,T,T,T,T},
+            {T,T,T,T,T,H,T,T,H,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T}},//3
+        {   {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,H,H,T,T,T,T,T,H,T,T,T},
+            {T,T,T,H,T,T,T,T,T,H,H,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T}},//4
+        {   {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,H,T,T,T,T,H,T,T,T,H,T},
+            {T,H,T,H,T,H,T,T,H,T,H,T,H,T},
+            {T,H,T,H,T,H,T,T,H,T,H,T,H,T},
+            {T,H,T,T,T,H,T,T,T,T,H,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T}},//5
+        {   {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,H,H,T,T,T,T,T,T,H,H,T,T},
+            {T,T,H,H,T,T,T,T,T,T,H,H,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T}},//6
+        {   {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,H,T,T,T,T,T,T,H,T,T,T,T},
+            {T,T,H,H,T,T,T,T,T,H,H,T,T,T},
+            {T,T,T,H,H,T,T,T,T,T,H,H,T,T},
+            {T,T,T,T,H,T,T,T,T,T,T,H,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T}},//7
+        {   {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T}},//8
+        {   {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,H,H,T,T,T,T,T,T,H,H,T,T},
+            {T,T,T,T,H,T,T,T,T,H,T,T,T,T},
+            {T,T,T,T,H,T,T,T,T,H,T,T,T,T},
+            {T,T,H,H,T,T,T,T,T,T,H,H,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T}},//9
+        {   {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T}},//10
+        {   {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T}},//11
+        {   {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,H,T,T,T,T,T,T,H,T,T,T},
+            {T,T,T,H,T,T,T,T,T,T,H,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T}},//12
+        {   {T,T,T,T,H,T,T,T,T,H,T,T,T,T},
+            {H,H,H,H,H,T,T,T,T,H,H,H,H,H},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {H,H,H,H,H,T,T,T,T,H,H,H,H,H},
+            {T,T,T,T,H,T,T,T,T,H,T,T,T,T}},//13
+        {   {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,H,T,T,T,T,T,T,T,T,H,T,T},
+            {T,T,T,H,T,T,T,T,T,T,H,T,T,T},
+            {T,T,T,H,T,T,T,T,T,T,H,T,T,T},
+            {T,T,H,T,T,T,T,T,T,T,T,H,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T}},//14
+        {   {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T}},//15
+        {   {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,H,T,H,T,H,H,T,H,T,H,T,T},
+            {T,T,H,T,H,T,T,T,T,H,T,H,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T}},//16
+        {   {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,H,T,T,H,T,T,T,T,T},
+            {T,T,T,T,T,H,T,T,H,T,T,T,T,T},
+            {T,T,T,T,T,H,T,T,H,T,T,T,T,T},
+            {T,T,T,T,H,H,T,T,H,H,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T}},//17
+        {   {T,T,T,T,H,H,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,H,H,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,H,H,T,T,T,T,T,H,H,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T}},//18
+        {   {T,H,T,T,T,T,T,T,T,T,T,T,T,H},
+            {T,H,T,T,T,T,T,T,T,T,T,T,T,H},
+            {T,T,T,T,T,T,T,T,H,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,H,T,T,T,T,T},
+            {T,T,H,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,H,T,T,T,T,T,T,T,T,T,T,T}},//19
+        {   {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T}},//20
+        {   {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,H,T,T,T,T,H,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,H,T,T,T,T,H,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T}},//21
+        {   {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,H,H,H,H,H,H,H,H,H,H,T,T},
+            {T,T,H,H,H,H,H,H,H,H,H,H,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T}},//22
+        {   {T,T,H,H,T,T,T,T,T,T,H,H,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,H,H,T,T,T,T,T,T,H,H,T,T}},//23
+        {   {H,T,T,T,T,T,T,T,T,T,T,T,T,H},
+            {H,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+            {T,T,T,T,T,T,T,T,T,T,T,T,T,H},
+            {H,T,T,T,T,T,T,T,T,T,T,T,T,H}}//24
+    };
+
+    bool[,,] stoolRules =
+    {
+        {   {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H}},//1
+        {   {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,T,T,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,T,T,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H}},//2
+        {   {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,T,H,T,H,T,H,H,T,H,T,H,T,H},
+            {H,H,T,H,H,H,H,H,H,H,H,T,H,H},
+            {H,H,T,H,H,H,H,H,H,H,H,T,H,H},
+            {H,T,H,T,H,T,H,H,T,H,T,H,T,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H}},//3
+        {   {T,T,H,H,H,H,H,H,H,H,H,H,T,T},
+            {T,H,H,H,H,H,H,H,H,H,H,H,H,T},
+            {H,H,H,H,H,H,H,H,T,H,H,H,H,H},
+            {H,H,H,H,H,T,H,H,H,H,H,H,H,H},
+            {T,H,H,H,H,H,H,H,H,H,H,H,H,T},
+            {T,T,H,H,H,H,H,H,H,H,H,H,T,T}},//4
+        {   {H,H,H,T,H,H,H,H,T,H,H,H,T,H},
+            {H,T,H,H,H,T,H,H,H,H,T,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,T,H,H,H,T,H},
+            {H,T,H,H,H,T,H,H,H,H,T,H,H,H}},//5
+        {   {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,T,H,H,T,H,H,H,T,H,H,H},
+            {H,H,H,H,T,H,H,H,H,T,H,H,H,H},
+            {H,H,H,H,T,H,H,H,H,T,H,H,H,H},
+            {H,H,H,T,H,H,H,T,H,H,T,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H}},//6
+        {   {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,T,H,H,H,T,H,H,T,H,H,H,T,H},
+            {H,H,H,H,H,H,T,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,T,H,H,H,H,H,H},
+            {H,T,H,H,H,T,H,H,T,H,H,H,T,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H}},//7
+        {   {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,T,H,H,H,H,H,H,H,H,H,H,T,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,T,H,H,H,H,H,H,H,H,H,H,T,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H}},//8
+        {   {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,T,T,H,H,H,H,H,H,H,H,T,T,H},
+            {H,H,H,T,T,H,H,H,H,T,T,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H}},//9
+        {   {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H}},//10
+        {   {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H}},//11
+        {   {T,T,T,T,T,H,H,H,H,T,T,T,T,T},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {T,T,T,T,T,H,H,H,H,T,T,T,T,T}},//12
+        {   {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H}},//13
+        {   {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,T,H,T,H,H,H,H,H,H},
+            {H,H,H,H,H,H,T,H,T,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H}},//14
+        {   {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,T,T,T,T,T,T,T,T,T,T,H,H},
+            {H,H,T,H,H,H,H,H,H,H,H,T,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H}},//15
+        {   {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,T,H,H,H,T,H,H,T,H,H,H,T,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,T,H,H,H,H,H,H,T,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H}},//16
+        {   {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H}},//17
+        {   {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,T,T,H,H,H,H,H,T,T,H,H,H,H},
+            {H,H,H,H,H,T,T,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,T,T,H,H,H,H,H,H},
+            {H,T,T,H,H,H,H,H,H,H,H,T,T,H}},//18
+        {   {H,H,H,H,H,T,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,T,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,T,H,H,H,H,H,H,T,H,H},
+            {H,H,H,H,T,H,H,H,H,H,H,T,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H}},//19
+        {   {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,T,H,H,T,H,H,T,H,H,T,H,H,T},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {T,H,H,T,H,H,T,H,H,T,H,H,T,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H}},//20
+        {   {H,H,H,H,H,T,H,H,T,H,H,H,H,H},
+            {T,T,H,H,H,T,H,H,T,H,H,H,T,T},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {T,T,H,H,H,T,H,H,T,H,H,H,T,T},
+            {H,H,H,H,H,T,H,H,T,H,H,H,H,H}},//21
+        {   {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H}},//22
+        {   {T,T,H,H,H,H,H,H,H,H,H,H,T,T},
+            {T,T,H,H,H,H,H,H,H,H,H,H,T,T},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {T,T,H,H,H,H,H,H,H,H,H,H,T,T},
+            {T,T,H,H,H,H,H,H,H,H,H,H,T,T}},//23
+        {   {H,H,H,H,H,H,H,H,H,H,H,H,H,H},
+            {H,H,H,T,H,H,H,H,H,H,T,T,T,T},
+            {H,H,H,T,H,H,H,H,H,H,T,H,H,H},
+            {H,H,H,T,H,H,H,H,H,H,T,H,H,H},
+            {T,T,T,T,H,H,H,H,H,H,T,H,H,H},
+            {H,H,H,H,H,H,H,H,H,H,H,H,H,H}},//24
+    };
 
     [SerializeField]
     private Transform wallParent, groundParent, holeParent, stoolParent, doorParent, enemyParent;
@@ -47,8 +345,7 @@ public class levelGenScript : MonoBehaviour
         bool[,] tiles = new bool[levelRadiusW * 2, levelRadiusH * 2];
         bool[,] stools = new bool[levelRadiusW * 2, levelRadiusH * 2];
 
-        int holeRule = Random.Range(0, 5);
-        int stoolRule = Random.Range(0, 5);
+        int roomRule = Random.Range(0, 24);
 
         //Corners
         Instantiate(wallCorner, new Vector3(-levelRadiusW, -levelRadiusH + 1), Quaternion.Euler(0.0f, 0.0f, 90.0f), wallParent);
@@ -64,8 +361,8 @@ public class levelGenScript : MonoBehaviour
             for (int y = 0; y < levelRadiusH * 2; y++)
             {
                 //Setting tile existence
-                tiles[x, y] = !IsHole(x,y, holeRule);
-                stools[x, y] = IsStool(x, y, stoolRule);
+                tiles[x, y] = tileRules[roomRule,y,x];
+                stools[x, y] = stoolRules[roomRule,y,x];
 
                 Instantiate(
                     tiles[x, y] ? groundTile : hole,
@@ -126,6 +423,17 @@ public class levelGenScript : MonoBehaviour
 			int enemyChance = 0;
 
 			List<Transform> possiblePositions = new List<Transform>((Transform[])groundParent.GetComponentsInChildren<Transform>().Clone());
+            foreach(Transform t1 in stoolParent.GetComponentsInChildren<Transform>())
+            {
+                foreach(Transform t2 in possiblePositions)
+                {
+                    if( (t1.position - t2.position).sqrMagnitude < 0.5f)
+                    {
+                        possiblePositions.Remove(t2);
+                        break;
+                    }
+                }
+            }
 
 			while (enemyChance < 1){
 				int posInd = Random.Range(0, possiblePositions.Count);
@@ -154,6 +462,7 @@ public class levelGenScript : MonoBehaviour
     {
         vistedRooms = new List<Vector2>();
         levelPos = new Vector2(Random.value, Random.value);
+        vistedRooms.Add(levelPos);
         LoadLevel(levelPos);
     }
 
@@ -220,3 +529,4 @@ public class levelGenScript : MonoBehaviour
     }
 
 }
+

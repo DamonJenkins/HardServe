@@ -15,8 +15,14 @@ public class buttonManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        musicSlider.value = PlayerPrefs.GetFloat("musicVolume");
-        sfxSlider.value = PlayerPrefs.GetFloat("sfxVolume");
+        if (musicSlider)
+        {
+            musicSlider.value = PlayerPrefs.GetFloat("musicVolume");
+        }
+        if (sfxSlider)
+        {
+            sfxSlider.value = PlayerPrefs.GetFloat("sfxVolume");
+        }
     }
 
     // Update is called once per frame
