@@ -464,6 +464,7 @@ public class levelGenScript : MonoBehaviour
         levelPos = new Vector2(Random.value, Random.value);
         vistedRooms.Add(levelPos);
         LoadLevel(levelPos);
+        GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("musicVolume");
     }
 
     bool IsHole(int x, int y, int rule)

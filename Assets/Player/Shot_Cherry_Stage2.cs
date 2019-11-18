@@ -21,8 +21,9 @@ public class Shot_Cherry_Stage2 : MonoBehaviour
         existenceTimer = fuseTime;
 
 		myAnimator = GetComponent<Animator>();
+        GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("sfxVolume");
 
-	}
+    }
 
     // Update is called once per frame
     void Update()
@@ -40,6 +41,7 @@ public class Shot_Cherry_Stage2 : MonoBehaviour
 			{
 				enemy.GetComponent<EnemyAI>().receiveDmg(Shot_Cherry.explosionDamage);
 			}
+            if(!GetComponent<AudioSource>().isPlaying )GetComponent<AudioSource>().Play();
 		}
     }
 

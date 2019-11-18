@@ -16,7 +16,14 @@ public class Player : MonoBehaviour{
 	[SerializeField]
 	Shot_Cherry cherryShot;
 
-	public static int currentWeapon = 0;
+    [SerializeField]
+    private AudioSource walkSource;
+    [SerializeField]
+    private AudioSource shot1Source;
+    [SerializeField]
+    private AudioSource shot2Source;
+
+    public static int currentWeapon = 0;
 	float maxMaxSpeed = 21.0f;
     float maxSpeed = 7.0f;
 	int maxHealth = 3;
@@ -43,7 +50,10 @@ public class Player : MonoBehaviour{
 		for (int i = 0; i < 3; i++) {
 			weaponAmmo[i] = maxAmmo[i];
 		}
-	}
+        walkSource.volume = PlayerPrefs.GetFloat("sfxVolume");
+        shot1Source.volume = PlayerPrefs.GetFloat("sfxVolume");
+        shot2Source.volume = PlayerPrefs.GetFloat("sfxVolume");
+    }
 
     // Update is called once per frame
     void Update(){
@@ -69,6 +79,13 @@ public class Player : MonoBehaviour{
         Vector2 plrVel = GetComponent<Rigidbody2D>().velocity;
 
         Animator myAnimator = GetComponent<Animator>();
+
+        if(GetComponent<Rigidbody2D>().velocity.sqrMagnitude > 0.5f && !walkSource.isPlaying){
+                walkSource.Play();
+        }else if(GetComponent<Rigidbody2D>().velocity.sqrMagnitude < 0.5f && walkSource.isPlaying)
+        {
+            walkSource.Stop();
+        }
 
         myAnimator.SetBool("GoingLeft", plrVel.x < 0.0f);
         myAnimator.SetBool("GoingRight", plrVel.x > 0.0f);
@@ -143,8 +160,8 @@ public class Player : MonoBehaviour{
 				plrVelocity
 			);
 		}
-
-		shotTimers[currentWeapon] = 1.0f / fireRates[currentWeapon];
+        if (!shot2Source.isPlaying) shot2Source.Play();
+        shotTimers[currentWeapon] = 1.0f / fireRates[currentWeapon];
 	}
 
 	void ShootChocolate(Vector2 _direction){
@@ -154,7 +171,7 @@ public class Player : MonoBehaviour{
 			_direction,
 			plrVelocity
 		);
-
+        if (!shot1Source.isPlaying) shot1Source.Play();
 		shotTimers[currentWeapon] = 1.0f / fireRates[currentWeapon];
 	}
 
@@ -165,8 +182,8 @@ public class Player : MonoBehaviour{
 			_direction,
 			plrVelocity
 		);
-
-		shotTimers[currentWeapon] = 1.0f / fireRates[currentWeapon];
+        if (!shot2Source.isPlaying) shot2Source.Play();
+        shotTimers[currentWeapon] = 1.0f / fireRates[currentWeapon];
 	}
 
 	public void AddStats(float _moveSpeed, int _maxHealth, float _maxAmmo, float _rechargeRate, float _fireRate, float _damage, float _shotSpeed, float _range) {
