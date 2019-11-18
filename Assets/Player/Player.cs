@@ -143,6 +143,12 @@ public class Player : MonoBehaviour{
             else currentWeapon += 1;
 			WeaponChanged();
 		}
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("mainMenuScene");
+        }
+
     }
 
     bool CanShoot() {
